@@ -147,3 +147,4 @@ document.getElementById('rsvp-deadline').textContent =
 // ── Init components ───────────────────────────────────────────────────────────
 initReveal();
 initRSVP();
+
