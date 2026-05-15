@@ -8,6 +8,8 @@
   padding: 5rem 2rem 4rem;
   position: relative;
   overflow: visible;
+  position: relative;
+  z-index: 1; 
   background: linear-gradient(155deg, var(--ivory) 0%, var(--ivory-warm) 55%, var(--ivory-deep) 100%);
 }
 
