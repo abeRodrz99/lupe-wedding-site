@@ -43,3 +43,5 @@ export const hotel = {
 export const directions = {
   body: '[Add driving directions, nearest airports, and parking info here.]',
 };
+
+
