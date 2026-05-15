@@ -7,7 +7,7 @@
   text-align: center;
   padding: 5rem 2rem 4rem;
   position: relative;
-  overflow: clip;
+  overflow: visible;
   background: linear-gradient(155deg, var(--ivory) 0%, var(--ivory-warm) 55%, var(--ivory-deep) 100%);
 }
 
@@ -24,6 +24,7 @@
 .hero__botanical {
   position: absolute;
   pointer-events: none;
+  overflow: clip;
   opacity: 0.5;
 }
 .hero__botanical--tl { top: -20px; left: 0; width: 220px; }
