@@ -17,9 +17,20 @@ function renderCalendarButton(event) {
     + `&dates=${event.startUtc}/${event.endUtc}`
     + `&location=${encodeURIComponent(event.location)}`;
 
-  const icsData = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${event.title}\nDTSTART:${event.startUtc}\nDTEND:${event.endUtc}\nLOCATION:${event.location}\nEND:VEVENT\nEND:VCALENDAR`;
+  const icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    `SUMMARY:${event.title}`,
+    `DTSTART:${event.startUtc}`,
+    `DTEND:${event.endUtc}`,
+    `LOCATION:${event.location}`,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\n');
 
-  const icsUrl = `data:text/calendar;charset=utf8,${encodeURIComponent(icsData)}`;
+  const icsBlob = new Blob([icsContent], { type: 'text/calendar' });
+  const icsUrl  = URL.createObjectURL(icsBlob);
 
   document.getElementById('calendar-button').innerHTML = `
     <div class="cal-wrap">
@@ -50,7 +61,7 @@ function renderCalendarButton(event) {
             <span class="cal-label-sub">Opens in browser</span>
           </div>
         </a>
-        <a href="${icsUrl}" class="cal-option" target="_blank">
+        <a href="${icsUrl}" class="cal-option" download="wedding.ics">
           <div class="cal-icon cal-icon--apple">
             <svg width="14" height="16" viewBox="0 0 814 1000" fill="white">
               <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 268.5-317.3 69.4 0 126.9 45.6 170.3 45.6 41.3 0 106.3-48.1 183.7-48.1 14.1 0 130.9 1.3 195.1 98.4zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/>
@@ -58,7 +69,7 @@ function renderCalendarButton(event) {
           </div>
           <div class="cal-label">
             <span class="cal-label-main">Apple / Outlook</span>
-            <span class="cal-label-sub">Opens in Calendar</span>
+            <span class="cal-label-sub">Downloads .ics file</span>
           </div>
         </a>
       </div>
