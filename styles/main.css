@@ -46,6 +46,8 @@
 /* Push body content down so nav doesn't cover the hero */
 body {
   scroll-padding-top: 60px; /* matches nav height */
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* ── CALENDAR BUTTON ──────────────────────────────────────────── */
