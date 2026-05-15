@@ -7,7 +7,7 @@
   text-align: center;
   padding: 5rem 2rem 4rem;
   position: relative;
-  overflow: visible;
+  overflow: clip;
   background: linear-gradient(155deg, var(--ivory) 0%, var(--ivory-warm) 55%, var(--ivory-deep) 100%);
 }
 
@@ -26,8 +26,8 @@
   pointer-events: none;
   opacity: 0.5;
 }
-.hero__botanical--tl { top: -20px; left: -20px; width: 220px; }
-.hero__botanical--br { bottom: -20px; right: -20px; width: 200px; transform: rotate(180deg); }
+.hero__botanical--tl { top: -20px; left: 0; width: 220px; }
+.hero__botanical--br { bottom: -20px; right: 0; width: 200px; transform: rotate(180deg); }
 
 .hero__inner {
   position: relative;
@@ -138,6 +138,6 @@
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 540px) {
-  .hero__botanical--tl { width: 150px; }
-  .hero__botanical--br { width: 130px; }
+  .hero__botanical--tl { width: 150px; left: 0; }
+  .hero__botanical--br { width: 130px; right: 0; }
 }
