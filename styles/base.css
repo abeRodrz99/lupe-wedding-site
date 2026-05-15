@@ -1,0 +1,106 @@
+/* ── Design tokens ──────────────────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --crimson:        #73233C;
+  --crimson-dim:    rgba(115, 35, 60, 0.15);
+  --crimson-glow:   rgba(115, 35, 60, 0.07);
+
+  /* Neutrals */
+  --ivory:          #fdf8f2;
+  --ivory-warm:     #f4ece0;
+  --ivory-deep:     #ece0d2;
+  --border:         #e4d8cc;
+
+  /* Ink */
+  --ink:            #2c1e16;
+  --ink-mid:        #5a3d2e;
+  --ink-muted:      #9a7a65;
+  --ink-dark:       #1e1310;
+
+  /* Gold */
+  --gold:           #c9a87c;
+  --gold-faint:     rgba(201, 168, 124, 0.25);
+  --gold-mid:       rgba(201, 168, 124, 0.65);
+
+  /* Typography */
+  --font-serif:     'Cormorant Garamond', Georgia, serif;
+  --font-sans:      'Jost', system-ui, sans-serif;
+
+  /* Layout */
+  --max-w:          780px;
+  --radius:         2px;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg { display: block; max-width: 100%; }
+a        { color: inherit; }
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: var(--ivory); }
+::-webkit-scrollbar-thumb { background: var(--crimson); border-radius: 3px; opacity: 0.5; }
+
+/* ── Focus ──────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 3px;
+}
+
+/* ── Typography scale ───────────────────────────────────────────────────── */
+.t-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.t-section-label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-align: center;
+  margin-bottom: 0.6rem;
+}
+
+.t-section-label--gold  { color: var(--gold); }
+.t-section-label--left  { text-align: left; }
+
+.t-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.t-heading--light { color: var(--ivory); }
+
+/* ── Animations ─────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
