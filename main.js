@@ -56,7 +56,7 @@ document.getElementById('footer-names').textContent =
   `${couple.partner1} & ${couple.partner2}`;
 
 document.getElementById('footer-sub').textContent =
-  `${couple.date} · Charleston, SC`;
+  `${couple.date} · Armadillo de los Infante, San Luis Potosí`;
 
 // ── Render RSVP deadline ──────────────────────────────────────────────────────
 document.getElementById('rsvp-deadline').textContent =
