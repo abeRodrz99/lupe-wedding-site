@@ -4,9 +4,9 @@
 export const couple = {
   partner1: 'Guadalupe',
   partner2: 'Orlando',
-  date:     'September 19, 2026',
+  date:     'April  21, 2027',
   location: 'Charleston, South Carolina',
-  rsvpDeadline: 'April 21, 2027',
+  rsvpDeadline: 'July 1, 2026',
 };
 
 export const ceremony = {
