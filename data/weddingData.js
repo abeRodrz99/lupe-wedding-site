@@ -2,11 +2,11 @@
 // Edit this file to update names, dates, venues, and links across the site.
 
 export const couple = {
-  partner1: 'Emma',
-  partner2: 'James',
+  partner1: 'Guadalupe',
+  partner2: 'Orlando',
   date:     'September 19, 2026',
   location: 'Charleston, South Carolina',
-  rsvpDeadline: 'July 1, 2026',
+  rsvpDeadline: 'April 21, 2027',
 };
 
 export const ceremony = {
