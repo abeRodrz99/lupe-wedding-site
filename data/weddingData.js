@@ -9,6 +9,13 @@ export const couple = {
   rsvpDeadline: 'July 1, 2026',
 };
 
+export const calendarEvent = {
+  title: 'Guadalupe & Orlando\'s Wedding',
+  location: 'Armadillo Mágico, Calz. de Guadalupe 100, 78980 Armadillo de los Infante, S.L.P., Mexico',
+  startUtc: '20270421T200000Z',
+  endUtc:   '20270422T070000Z',
+};
+
 export const ceremony = {
   title:      'Ceremony',
   icon:       '✦',

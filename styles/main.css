@@ -47,3 +47,88 @@
 body {
   scroll-padding-top: 60px; /* matches nav height */
 }
+
+/* ── CALENDAR BUTTON ──────────────────────────────────────────── */
+/* ── Calendar button ─────────────────────────────────────────── */
+.cal-wrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 1.5rem;
+}
+
+.cal-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  background: transparent;
+  border: 1px solid rgba(115, 35, 60, 0.35);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cal-trigger:hover,
+.cal-trigger.open {
+  border-color: var(--crimson);
+  background: rgba(115, 35, 60, 0.05);
+}
+
+.cal-chevron { transition: transform 0.2s; }
+.cal-trigger.open .cal-chevron { transform: rotate(180deg); }
+
+.cal-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid rgba(115, 35, 60, 0.15);
+  border-radius: 6px;
+  min-width: 220px;
+  box-shadow: 0 8px 24px rgba(44, 30, 22, 0.12);
+  z-index: 100;
+  padding: 0.4rem;
+}
+.cal-dropdown.open { display: block; }
+
+.cal-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.cal-option:hover { background: var(--bg); }
+.cal-option + .cal-option { margin-top: 2px; }
+
+.cal-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cal-icon--google { background: #fff; border: 1px solid #e8e0d8; }
+.cal-icon--apple  { background: #1c1c1e; }
+
+.cal-label { display: flex; flex-direction: column; gap: 1px; text-align: left; }
+.cal-label-main { font-size: 0.78rem; color: var(--ink); }
+.cal-label-sub  { font-size: 0.65rem; color: var(--ink-muted); }
