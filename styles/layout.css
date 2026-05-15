@@ -7,7 +7,7 @@
   text-align: center;
   padding: 5rem 2rem 4rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: linear-gradient(155deg, var(--ivory) 0%, var(--ivory-warm) 55%, var(--ivory-deep) 100%);
 }
 
@@ -33,6 +33,7 @@
   position: relative;
   z-index: 1;
   animation: fadeUp 0.9s ease both;
+  overflow: visible;
 }
 
 .hero__eyebrow {
