@@ -23,7 +23,7 @@ function renderCard(event) {
       <p class="card__address">${event.address}<br>${event.city}</p>
       <div class="card__actions">
         <a href="${event.mapUrl}" class="btn btn--outline" target="_blank" rel="noopener">Map</a>
-        <a href="${event.venueUrl}" class="btn btn--outline">Venue Site</a>
+        ${event.venueUrl ? `<a href="${event.venueUrl}" class="btn btn--outline">Venue Site</a>` : ''}
       </div>
     </div>
   `;
@@ -34,7 +34,7 @@ document.getElementById('cards').innerHTML =
 
 // ── Render hotel ──────────────────────────────────────────────────────────────
 document.getElementById('hotel-block').innerHTML = `
-  <p class="hotel__tag">Room Block</p>
+  <p class="hotel__tag">Reserve Your Room</p>
   <h3 class="hotel__name">${hotel.name}</h3>
   <p class="hotel__address">${hotel.address}</p>
   <dl class="hotel__meta">
@@ -46,8 +46,11 @@ document.getElementById('hotel-block').innerHTML = `
 `;
 
 // ── Render directions ─────────────────────────────────────────────────────────
-document.getElementById('directions-body').textContent = directions.body;
-
+const dir = document.getElementById('directions-body');
+dir.innerHTML = `
+  <p>${directions.body}</p>
+  ${directions.buttonUrl ? `<a href="${directions.buttonUrl}" class="btn btn--outline" target="_blank" rel="noopener">Get Directions</a>` : ''}
+`;
 // ── Render footer ─────────────────────────────────────────────────────────────
 document.getElementById('footer-names').textContent =
   `${couple.partner1} & ${couple.partner2}`;

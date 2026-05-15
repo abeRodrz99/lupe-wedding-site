@@ -3,3 +3,47 @@
 @import './base.css';
 @import './layout.css';
 @import './components.css';
+
+/* ── STICKY NAV ──────────────────────────────────────────── */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 252, 248, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(115, 35, 60, 0.12);
+  transition: box-shadow 0.3s ease;
+}
+
+.site-nav.scrolled {
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+}
+
+.site-nav a {
+  font-family: inherit;          /* matches your existing t-eyebrow style */
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #73233C;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  border-bottom-color: #73233C;
+}
+
+/* Push body content down so nav doesn't cover the hero */
+body {
+  scroll-padding-top: 60px; /* matches nav height */
+}

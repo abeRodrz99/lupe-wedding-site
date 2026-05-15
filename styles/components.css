@@ -195,6 +195,13 @@
   color: var(--ink-muted);
   line-height: 1.8;
   margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.directions__body a {
+  margin-top: 0.75rem;
 }
 
 /* ── RSVP Form ───────────────────────────────────────────────────────────── */

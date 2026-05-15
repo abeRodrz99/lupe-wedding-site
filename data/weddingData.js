@@ -13,35 +13,37 @@ export const ceremony = {
   title:      'Ceremony',
   icon:       '✦',
   time:       '4:00 PM',
-  venue:      'St. Augustine Chapel',
-  address:    '123 Chapel Lane',
-  city:       'Charleston, SC 29401',
-  mapUrl:     'https://maps.google.com',
-  venueUrl:   '#venue',
+  venue:      'Church of the Immaculate Conception',
+  address:    'Calle Sta. Isabel 100',
+  city:       'Armadillo de los Infante, S.L.P.',
+  mapUrl:     'https://share.google/XOYjXNEYD3YMDzYut',
+  venueUrl:   null,
+
 };
 
 export const reception = {
   title:      'Reception',
   icon:       '◈',
   time:       '6:00 PM',
-  venue:      'The Grand Ballroom',
-  address:    '456 Harbor Street',
-  city:       'Charleston, SC 29401',
-  mapUrl:     'https://maps.google.com',
-  venueUrl:   '#venue',
+  venue:      'Armadillo Mágico',
+  address:    'Calz. de Guadalupe 100',
+  city:       'Armadillo de los Infante, S.L.P.',
+  mapUrl:     'https://share.google/7gqOVWk8gIsvEzxKY',
+  venueUrl:   'https://www.armadillomagico.com/',
 };
 
 export const hotel = {
-  name:       'The Charleston Inn',
-  address:    '789 King Street · Charleston, SC 29401',
-  blockCode:  'EMMA & JAMES 2026',
+  name:       'Armadillo Mágico',
+  address:    'Calz. de Guadalupe 100, 78980 Armadillo de los Infante, S.L.P.',
+  blockCode:  'TBD',
   bookBy:     'August 1, 2026',
-  phone:      '(843) 555-0192',
-  bookUrl:    '#hotel',
+  phone:      '+52 444 106 0503',
+  bookUrl:    'https://www.armadillomagico.com/hospedaje',
 };
 
 export const directions = {
-  body: '[Add driving directions, nearest airports, and parking info here.]',
+  body: 'San Luis Potosí International Airport is the closest to the venue, roughly an hour away. It\'s also a convenient place to stay if you\'d prefer a larger city.',
+  buttonUrl: 'https://maps.app.goo.gl/fw5m15a5ik2e1WFR8',
 };
 
 
