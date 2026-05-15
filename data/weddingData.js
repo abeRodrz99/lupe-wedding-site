@@ -5,7 +5,7 @@ export const couple = {
   partner1: 'Guadalupe',
   partner2: 'Orlando',
   date:     'April  21, 2027',
-  location: 'Charleston, South Carolina',
+  location: 'Armadillo de los Infante, San Luis Potosí',
   rsvpDeadline: 'July 1, 2026',
 };
 
