@@ -3,7 +3,7 @@
   /* Brand */
   --crimson:        #73233C;
   --crimson-dim:    rgba(115, 35, 60, 0.15);
-  --crimson-glow:   rgba(115, 35, 60, 0.07);
+  --crimson-glow:   #73233c12;
 
   /* Neutrals */
   --ivory:          #fdf8f2;
@@ -12,10 +12,10 @@
   --border:         #e4d8cc;
 
   /* Ink */
-  --ink:            #2c1e16;
+  --ink:            #73233C;
   --ink-mid:        #5a3d2e;
   --ink-muted:      #9a7a65;
-  --ink-dark:       #1e1310;
+  --ink-dark:       #4d1728;
 
   /* Gold */
   --gold:           #c9a87c;
