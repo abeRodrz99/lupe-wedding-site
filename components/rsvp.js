@@ -35,11 +35,20 @@ function setLoading(btn, isLoading) {
 
 function showSuccess(formWrap, name) {
   formWrap.innerHTML = `
-    <p class="rsvp-success">
-      Thank you, ${escapeHtml(name)}!<br>
-      We can't wait to celebrate with you. ✦
-    </p>
+    <div class="rsvp-confirmation">
+      <p class="rsvp-confirm-message">We can't wait to celebrate with you.</p>
+      <p class="rsvp-confirm-sub">Your RSVP has been received</p>
+      <div class="rsvp-logo-reveal">
+        <img src="./assets/garcia-logo.png" alt="${escapeHtml(name)}" />
+      </div>
+    </div>
   `;
+
+  requestAnimationFrame(() => {
+    formWrap.querySelector('.rsvp-confirm-message').classList.add('animate');
+    formWrap.querySelector('.rsvp-confirm-sub').classList.add('animate');
+    formWrap.querySelector('.rsvp-logo-reveal').classList.add('animate');
+  });
 }
 
 function showError(formWrap) {
