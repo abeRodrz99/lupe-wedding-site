@@ -4,22 +4,21 @@
 export const couple = {
   partner1: 'Guadalupe',
   partner2: 'Orlando',
-  date:     'April  21, 2027',
+  date:     'April  16, 2027',
   location: 'Armadillo de los Infante, San Luis Potosí',
-  rsvpDeadline: 'July 1, 2026',
 };
 
 export const calendarEvent = {
   title: 'Guadalupe & Orlando\'s Wedding',
-  location: 'Armadillo Mágico, Calz. de Guadalupe 100, 78980 Armadillo de los Infante, S.L.P., Mexico',
-  startUtc: '20270421T200000Z',
-  endUtc:   '20270422T070000Z',
+  location: 'Armadillo de los Infante, S.L.P., Mexico',
+  startUtc: '20270416T220000Z',  
+  endUtc:   '20270417T050000Z',  
 };
 
 export const ceremony = {
   title:      'Ceremony',
   icon:       '✦',
-  time:       '4:00 PM',
+  time:       '5:00 PM',
   venue:      'Church of the Immaculate Conception',
   address:    'Calle Sta. Isabel 100',
   city:       'Armadillo de los Infante, S.L.P.',
@@ -31,7 +30,7 @@ export const ceremony = {
 export const reception = {
   title:      'Reception',
   icon:       '◈',
-  time:       '6:00 PM',
+  time:       '6:30 PM',
   venue:      'Armadillo Mágico',
   address:    'Calz. de Guadalupe 100',
   city:       'Armadillo de los Infante, S.L.P.',
@@ -42,8 +41,6 @@ export const reception = {
 export const hotel = {
   name:       'Armadillo Mágico',
   address:    'Calz. de Guadalupe 100, 78980 Armadillo de los Infante, S.L.P.',
-  blockCode:  'TBD',
-  bookBy:     'August 1, 2026',
   phone:      '+52 444 106 0503',
   bookUrl:    'https://www.armadillomagico.com/hospedaje',
 };

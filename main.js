@@ -58,7 +58,6 @@ function renderCalendarButton(event) {
           </div>
           <div class="cal-label">
             <span class="cal-label-main">Google Calendar</span>
-            <span class="cal-label-sub">Opens in browser</span>
           </div>
         </a>
         <a href="${icsUrl}" class="cal-option" download="wedding.ics">
@@ -69,7 +68,6 @@ function renderCalendarButton(event) {
           </div>
           <div class="cal-label">
             <span class="cal-label-main">Apple / Outlook</span>
-            <span class="cal-label-sub">Downloads .ics file</span>
           </div>
         </a>
       </div>
@@ -119,18 +117,16 @@ document.getElementById('hotel-block').innerHTML = `
   <h3 class="hotel__name">${hotel.name}</h3>
   <p class="hotel__address">${hotel.address}</p>
   <dl class="hotel__meta">
-    <div class="hotel__meta-row"><dt>Block Code</dt><dd>${hotel.blockCode}</dd></div>
-    <div class="hotel__meta-row"><dt>Book By</dt><dd>${hotel.bookBy}</dd></div>
     <div class="hotel__meta-row"><dt>Phone</dt><dd>${hotel.phone}</dd></div>
   </dl>
-  <a href="${hotel.bookUrl}" class="btn btn--gold">Book Your Room</a>
+  <a href="${hotel.bookUrl}" target="_blank" class="btn btn--gold">Book Your Room</a>
 `;
 
 // ── Render directions ─────────────────────────────────────────────────────────
 const dir = document.getElementById('directions-body');
 dir.innerHTML = `
   <p>${directions.body}</p>
-  ${directions.buttonUrl ? `<a href="${directions.buttonUrl}" class="btn btn--outline" target="_blank" rel="noopener">Get Directions</a>` : ''}
+  ${directions.buttonUrl ? `<a href="${directions.buttonUrl}" target="_blank" class="btn btn--outline" target="_blank" rel="noopener">Get Directions</a>` : ''}
 `;
 
 // ── Render footer ─────────────────────────────────────────────────────────────
@@ -141,8 +137,10 @@ document.getElementById('footer-sub').textContent =
   `${couple.date} · Armadillo de los Infante, San Luis Potosí`;
 
 // ── Render RSVP deadline ──────────────────────────────────────────────────────
-document.getElementById('rsvp-deadline').textContent =
-  `Kindly Reply By ${couple.rsvpDeadline}`;
+const deadlineEl = document.getElementById('rsvp-deadline');
+if (couple.rsvpDeadline) {
+  deadlineEl.textContent = `Kindly Reply By ${couple.rsvpDeadline}`;
+}
 
 // ── Init components ───────────────────────────────────────────────────────────
 initReveal();
