@@ -59,7 +59,7 @@ body {
 }
 
 .hero {
-  overflow: clip;
+  overflow: visible;
   max-width: 100vw;
 }
 
