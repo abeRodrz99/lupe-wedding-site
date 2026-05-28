@@ -10,7 +10,7 @@ export const couple = {
 
 export const calendarEvent = {
   title: 'Guadalupe & Orlando\'s Wedding',
-  location: 'Armadillo de los Infante, San Luis Potosí, Mexico',
+  location: 'Church of the Immaculate Conception, Calle Sta. Isabel 100, Armadillo de los Infante, San Luis Potosí, Mexico',
   startUtc: '20270416T220000Z',  
   endUtc:   '20270417T050000Z',  
 };
