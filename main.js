@@ -102,7 +102,7 @@ function renderCard(event) {
       <p class="card__address">${event.address}<br>${event.city}</p>
       <div class="card__actions">
         <a href="${event.mapUrl}" class="btn btn--outline" target="_blank" rel="noopener">Map</a>
-        ${event.venueUrl ? `<a href="${event.venueUrl}" class="btn btn--outline">Venue Site</a>` : ''}
+        ${event.venueUrl ? `<a href="${event.venueUrl}" target="_blank" class="btn btn--outline">Venue Site</a>` : ''}
       </div>
     </div>
   `;
