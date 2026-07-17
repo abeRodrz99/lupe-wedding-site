@@ -47,7 +47,7 @@ export function initRSVP() {
   const guestNamesContainer = document.getElementById('guest-names-container');
   const dynamicInputs = document.getElementById('dynamic-guest-inputs');
 
-  if (!submitBtn) return; // Safety check
+  if (!submitBtn) return;
 
   guestsSelect.addEventListener('change', (e) => {
     const numGuests = parseInt(e.target.value, 10);
@@ -69,15 +69,14 @@ export function initRSVP() {
   submitBtn.addEventListener('click', async () => {
     if (submitBtn.disabled) return; 
 
-    statusMsg.textContent = "";
-    const name = nameInput.value.trim();
-
-    // STEP 1: LOOKUP & DUPLICATE CHECK
+    // STATE 1: LOOKUP MODE (Find Invitation)
     if (!hiddenFields.style.display || hiddenFields.style.display === 'none') {
+      const name = nameInput.value.trim();
       if (!name) { statusMsg.textContent = "Please enter your name."; return; }
       
       setLoading(submitBtn, true, 'Searching…');
-      
+      statusMsg.textContent = "";
+
       const query = encodeURIComponent(`{Name}='${name}'`);
       
       try {
@@ -110,20 +109,23 @@ export function initRSVP() {
           }
 
           hiddenFields.style.display = 'block';
-          submitBtn.textContent = 'Submit RSVP';
           nameInput.disabled = true;
+          
+          // --- THE SWITCH ---
+          submitBtn.textContent = 'Send RSVP'; 
+          setLoading(submitBtn, false, 'Send RSVP');
         } else {
           statusMsg.textContent = "Name not found. Please check spelling.";
+          setLoading(submitBtn, false, 'Find My Invitation');
         }
       } catch (err) {
-        console.error("Lookup error:", err);
         statusMsg.textContent = "Connection error.";
+        setLoading(submitBtn, false, 'Find My Invitation');
       }
-      setLoading(submitBtn, false, 'Find My Invitation');
       return;
     }
 
-    // STEP 2: FINAL SUBMIT
+    // STATE 2: SUBMISSION MODE (Send RSVP)
     setLoading(submitBtn, true, 'Sending…');
     submitBtn.disabled = true; 
 
@@ -131,7 +133,7 @@ export function initRSVP() {
     const guestNamesArray = Array.from(guestNameFields).map(input => input.value);
 
     const payload = {
-      "Name": name,
+      "Name": nameInput.value.trim(),
       "Contact Info": document.getElementById('contact').value,
       "Attending": document.getElementById('attending').value === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines',
       "Guests": parseInt(guestsSelect.value, 10),
