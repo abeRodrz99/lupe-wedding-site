@@ -141,6 +141,38 @@
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 540px) {
+  /* Existing botanical adjustments */
   .hero__botanical--tl { width: 150px; left: 0; }
   .hero__botanical--br { width: 130px; right: 0; }
+  
+  /* NEW: Reduce section padding to prevent squeezing the form */
+  .section {
+    padding: 4rem 1rem;
+  }
+
+  /* NEW: Force the RSVP form and its fields to respect the screen width */
+  .rsvp-form,
+  #hidden-rsvp-fields {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  /* NEW: Ensure inputs/selects never push past 100% of their container */
+  input, 
+  select, 
+  textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* NEW: Prevent long error messages from breaking out of the container */
+  .rsvp-error,
+  .field__error-msg {
+    width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
 }
