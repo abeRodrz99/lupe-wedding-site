@@ -47,15 +47,25 @@
 }
 
 /* ── Prevent horizontal scroll ───────────────────────────── */
-html {
-  overflow-x: hidden;
+/* ── Total Lockdown: Prevent All Horizontal Overflow ─────────────────────── */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden; /* Force hide any content that tries to escape */
 }
 
-body {
-  scroll-padding-top: 60px;
-  overflow-x: hidden;
+/* Ensure all block-level elements behave */
+* {
+  box-sizing: border-box;
   max-width: 100%;
-  overflow-x: clip;
+}
+
+/* Specifically for the Hero SVGs which often cause the 'initial load' scroll */
+.hero__botanical {
+  max-width: 100vw;
+  pointer-events: none;
 }
 
 .hero {
@@ -179,4 +189,36 @@ body {
   font-weight: 300;
   font-size: 0.8rem;
   margin-top: 4px;
+}
+
+/* ── Prevent horizontal scroll - The Lock-Down ──────────────────────────── */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* Force the container to never be wider than the screen */
+  max-width: 100vw;
+  /* Clip any overflowing content */
+  overflow-x: hidden;
+}
+
+/* Ensure the hero and sections don't force width */
+.hero, .section, .footer {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Mobile specific reset */
+@media (max-width: 540px) {
+  .hero, .section, .footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Ensure images or form elements don't push the width */
+  img, input, select, textarea, .rsvp-form {
+    max-width: 100%;
+  }
 }
