@@ -163,3 +163,20 @@ body {
     min-width: unset;
   }
 }
+
+/* ── RSVP ERROR MESSAGES ─────────────────────────────────── */
+/* 1. Targets the main error message that pops up at the top of the form */
+.rsvp-error {
+  color: #ececec; /* Soft red that will pop against a dark background */
+  font-weight: 300;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* 2. Targets the smaller errors under specific input fields */
+.field__error-msg {
+  color: #ececec; 
+  font-weight: 300;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
