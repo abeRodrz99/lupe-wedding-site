@@ -222,3 +222,29 @@ html, body {
     max-width: 100%;
   }
 }
+
+/* Add spacing between form fields */
+.field {
+  margin-bottom: 0.10rem;
+}
+
+/* Ensure dropdowns and inputs have room */
+.field-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Spacing for dynamic guest name inputs */
+#dynamic-guest-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Ensure the button has space at the bottom */
+#rsvp-submit {
+  margin-top: 1rem;
+  width: 100%;
+}

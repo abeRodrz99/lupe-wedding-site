@@ -317,6 +317,35 @@
   line-height: 1.4;
   opacity: 0;
 }
+
+.guest-name-field {
+  width: 100%;
+  /* Adjust these values to match your existing inputs exactly */
+  padding: 0.8rem 1rem; 
+  font-size: 1rem;
+  line-height: 1.5;
+  
+  margin-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.05); 
+  border: none;
+  color: var(--ivory);
+  font-family: var(--font-sans);
+  border-radius: var(--radius);
+}
+
+.guest-name-field::placeholder {
+  color: var(--ink-muted);
+  opacity: 0.7;
+}
+
+/* Ensure the container flows correctly */
+#dynamic-guest-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
 .rsvp-confirm-message.animate {
   animation: fadeUp 0.6s ease 0.1s both;
 }

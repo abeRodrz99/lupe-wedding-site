@@ -1,41 +1,23 @@
-// ── RSVP form component ──────────────────────────────────────────────────────
-// Handles validation, lookups, dynamic guest limits, and final submission.
+// ── RSVP form component (Airtable Version) ──────────────────────────
+const AIRTABLE_BASE_ID = 'appImJDIkK2RBr07x';
+const AIRTABLE_TOKEN = 'patWLRjGEZ16v8aaZ.b24bf6de0de1d655fa48e7a98a6b87300103497f74dc851e5b873c39e25e25ed';
+const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}`;
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbypux0vzuXAtBv3MHl9rQO_qG_DmAeMh7o730jI-H-WeAAb5yBmjV7gEfOZqpuh02kc/exec';
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+// ── Helpers ──────────────────────────────────────────────────────────
+function setLoading(btn, isLoading, text) { 
+  btn.disabled = isLoading; 
+  btn.textContent = isLoading ? 'Loading…' : text; 
 }
 
-function setFieldError(fieldEl, hasError) {
-  fieldEl.classList.toggle('field--error', hasError);
-}
-
-function clearErrorOnFocus(inputEl, fieldEl) {
-  inputEl.addEventListener('focus', () => setFieldError(fieldEl, false));
-}
-
-function setLoading(btn, isLoading, loadingText = 'Sending…', normalText = 'Send RSVP') {
-  btn.disabled    = isLoading;
-  btn.textContent = isLoading ? loadingText : normalText;
-}
-
-function showSuccess(formWrap, name) {
+function showSuccess(formWrap) {
   formWrap.innerHTML = `
-    <div class="rsvp-confirmation">
-      <p class="rsvp-confirm-message">We can't wait to celebrate with you.</p>
+    <div class="rsvp-success-container" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;">
+      <div class="rsvp-confirm-message">We can't wait to celebrate with you.</div>
       <p class="rsvp-confirm-sub">Your RSVP has been received</p>
-      <div class="rsvp-logo-reveal">
-        <img src="./assets/garcia-logo.png" alt="${escapeHtml(name)}" />
-      </div>
+      <img src="./assets/garcia-logo.png" alt="Success" class="rsvp-logo-reveal" style="max-width: 200px; margin-top: 1rem;">
     </div>
   `;
-
+  // Trigger animations
   requestAnimationFrame(() => {
     formWrap.querySelector('.rsvp-confirm-message').classList.add('animate');
     formWrap.querySelector('.rsvp-confirm-sub').classList.add('animate');
@@ -43,132 +25,106 @@ function showSuccess(formWrap, name) {
   });
 }
 
-function showError(formWrap, alternativeMessage) {
-  const existing = formWrap.querySelector('.rsvp-error');
-  if (existing) existing.remove();
-  const msg = document.createElement('p');
-  msg.className   = 'rsvp-error';
-  msg.textContent = alternativeMessage || 'Something went wrong — please try again or email us directly.';
-  formWrap.querySelector('.rsvp-form').prepend(msg);
-}
-
-// ── Submit to Google Sheets ───────────────────────────────────────────────────
-async function submitToSheet(payload) {
-  const params = new URLSearchParams(payload);
-  await fetch(APPS_SCRIPT_URL, {
+async function submitToAirtable(payload) {
+  const response = await fetch(`${AIRTABLE_URL}/RSVPs`, {
     method: 'POST',
-    mode:   'no-cors',
-    body:   params,
+    headers: {
+      'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ fields: payload })
   });
+  return response.json();
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
-
+// ── Init ─────────────────────────────────────────────────────────────
 export function initRSVP() {
   const submitBtn = document.getElementById('rsvp-submit');
-  const formWrap  = document.getElementById('rsvp-form-wrap');
-  if (!submitBtn || !formWrap) return;
-
-  const nameInput   = document.getElementById('name');
-  const emailInput  = document.getElementById('email');
+  const nameInput = document.getElementById('name');
+  const hiddenFields = document.getElementById('hidden-rsvp-fields');
   const guestsSelect = document.getElementById('guests');
-  
-  const nameField   = nameInput.closest('.field');
-  const emailField  = emailInput.closest('.field');
+  const formWrap = document.getElementById('rsvp-form-wrap');
+  const statusMsg = document.getElementById('rsvp-status-msg');
+  const guestNamesContainer = document.getElementById('guest-names-container');
+  const dynamicInputs = document.getElementById('dynamic-guest-inputs');
 
-  clearErrorOnFocus(nameInput,  nameField);
-  clearErrorOnFocus(emailInput, emailField);
-
-  // Track the unique guest limit allowed for the verified person
-  let maxGuestsAllowed = 1;
-  let isVerified = false;
-
-  // Change initial button appearance to guide them to check their name first
-  submitBtn.textContent = 'Find My Invitation';
+  guestsSelect.addEventListener('change', (e) => {
+    const numGuests = parseInt(e.target.value, 10);
+    dynamicInputs.innerHTML = ''; 
+    if (numGuests > 0) {
+      guestNamesContainer.classList.remove('hidden');
+      for (let i = 1; i <= numGuests; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = `Guest ${i} Name`;
+        input.className = 'guest-name-field';
+        dynamicInputs.appendChild(input);
+      }
+    } else {
+      guestNamesContainer.classList.add('hidden');
+    }
+  });
 
   submitBtn.addEventListener('click', async () => {
+    if (submitBtn.disabled) return; 
+
+    statusMsg.textContent = "";
     const name = nameInput.value.trim();
 
-    // ── STEP 1: VERIFY GUEST & GET LIMIT ─────────────────────────────────────
-    if (!isVerified) {
+    // STEP 1: Lookup and Reveal
+    if (!hiddenFields.style.display || hiddenFields.style.display === 'none') {
       if (!name) { 
-        setFieldError(nameField, true); 
+        statusMsg.textContent = "Please enter your name.";
         return; 
       }
+      
+      setLoading(submitBtn, true, 'Searching…');
+      const query = encodeURIComponent(`{Name}='${name}'`);
+      
+      const response = await fetch(`${AIRTABLE_URL}/Master%20Guest%20List?filterByFormula=${query}`, {
+        headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
+      });
+      const data = await response.json();
 
-      setLoading(submitBtn, true, 'Searching List…', 'Find My Invitation');
+      if (data.records && data.records.length > 0) {
+        const record = data.records[0];
+        const maxGuests = record.fields['Max Guests Allowed'] || 1;
 
-      try {
-        // Adds a unique timestamp to the end so the browser thinks it's a brand new request every time
-        const response = await fetch(`${APPS_SCRIPT_URL}?invitee=${encodeURIComponent(name)}&nocache=${new Date().getTime()}`);
-        const data = await response.json();
-
-        // Remove any previous error message if present
-        const existingError = formWrap.querySelector('.rsvp-error');
-        if (existingError) existingError.remove();
-
-        // ── NEW LOGIC: Block double submissions ──
-        if (data.status === 'already_submitted') {
-          setLoading(submitBtn, false, 'Searching List…', 'Find My Invitation');
-          showError(formWrap, "It looks like you have already submitted your RSVP! Please contact us directly if you need to update your response.");
-          return;
+        guestsSelect.innerHTML = '<option value="0">0</option>'; 
+        for (let i = 1; i <= maxGuests; i++) {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = i === 1 ? '1 Person' : `${i} People`;
+          guestsSelect.appendChild(opt);
         }
 
-        if (data.status === 'found') {
-          maxGuestsAllowed = data.maxGuests;
-          isVerified = true;
-
-          // Dynamically rewrite the dropdown selections based on their strict limit
-          guestsSelect.innerHTML = '';
-          for (let i = 1; i <= maxGuestsAllowed; i++) {
-            const opt = document.createElement('option');
-            opt.value = i;
-            opt.textContent = i === 1 ? '1 Person' : `${i} People`;
-            guestsSelect.appendChild(opt);
-          }
-
-          // Un-hide the rest of the form fields
-          const hiddenFields = document.getElementById('hidden-rsvp-fields');
-          if (hiddenFields) {
-            hiddenFields.style.display = 'block';
-          }
-
-          setLoading(submitBtn, false, 'Searching List…', 'Send RSVP');
-          nameInput.disabled = true; // lock name choice once validated
-          
-        } else {
-          setLoading(submitBtn, false, 'Searching List…', 'Find My Invitation');
-          showError(formWrap, "We couldn't find that name on our guest list. Please check your spelling.");
-        }
-      } catch (err) {
-        console.error('Lookup failed:', err);
-        setLoading(submitBtn, false, 'Searching List…', 'Find My Invitation');
-        showError(formWrap, 'Could not connect to guest database. Please try again.');
+        hiddenFields.style.display = 'block';
+        submitBtn.textContent = 'Submit RSVP'; // Switch button text
+        nameInput.disabled = true;
+      } else {
+        statusMsg.textContent = "Name not found. Please check spelling.";
       }
+      setLoading(submitBtn, false, 'Find My Invitation');
       return;
     }
 
-    // ── STEP 2: STANDARD RSVP SUBMISSION ─────────────────────────────────────
-    const email     = emailInput.value.trim();
-    const attending = document.getElementById('attending').value;
-    const guests    = guestsSelect.value;
-    const dietary   = document.getElementById('dietary').value.trim();
+    // STEP 2: Final Submit
+    setLoading(submitBtn, true, 'Sending…');
+    submitBtn.disabled = true; 
 
-    // Validate email before sending
-    if (!email) { 
-      setFieldError(emailField, true); 
-      return; 
-    }
+    const guestNameFields = document.querySelectorAll('.guest-name-field');
+    const guestNamesArray = Array.from(guestNameFields).map(input => input.value);
 
-    setLoading(submitBtn, true, 'Sending…', 'Send RSVP');
-
-    try {
-      await submitToSheet({ name, email, attending, guests, dietary });
-      showSuccess(formWrap, name);
-    } catch (err) {
-      console.error('RSVP submission failed:', err);
-      setLoading(submitBtn, false, 'Sending…', 'Send RSVP');
-      showError(formWrap);
-    }
+    const payload = {
+      "Name": name,
+      "Contact Info": document.getElementById('contact').value,
+      "Attending": document.getElementById('attending').value === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines',
+      "Guests": parseInt(guestsSelect.value, 10),
+      "Guest Names": guestNamesArray.join(', '),
+      "Dietary": document.getElementById('dietary').value
+    };
+    
+    await submitToAirtable(payload);
+    showSuccess(formWrap);
   });
 }

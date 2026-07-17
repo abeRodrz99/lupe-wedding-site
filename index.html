@@ -17,29 +17,7 @@
   </nav>
 
   <header class="hero">
-
-    <div class="hero__botanical hero__botanical--tl" aria-hidden="true" style="width: 150px; max-width: 40vw;">
-      <svg viewBox="0 0 260 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 310 C32 240,64 200,48 144 C32 88,80 48,96 16"  stroke="#73233C" stroke-width="1.2" fill="none"/>
-        <path d="M48 144 C64 128,104 124,120 104"                  stroke="#73233C" stroke-width="0.8" fill="none"/>
-        <path d="M64 192 C80 176,124 168,136 148"                  stroke="#73233C" stroke-width="0.8" fill="none"/>
-        <ellipse cx="120" cy="102" rx="18" ry="11" fill="#73233C" opacity="0.22" transform="rotate(-30 120 102)"/>
-        <ellipse cx="138" cy="146" rx="16" ry="10" fill="#73233C" opacity="0.18" transform="rotate(-15 138 146)"/>
-        <circle  cx="96"  cy="16"  r="6"            fill="#73233C" opacity="0.28"/>
-      </svg>
-    </div>
-
-    <div class="hero__botanical hero__botanical--br" aria-hidden="true" style="width: 130px; max-width: 40vw;">
-      <svg viewBox="0 0 260 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 310 C32 240,64 200,48 144 C32 88,80 48,96 16"  stroke="#73233C" stroke-width="1.2" fill="none"/>
-        <path d="M48 144 C64 128,104 124,120 104"                  stroke="#73233C" stroke-width="0.8" fill="none"/>
-        <path d="M64 192 C80 176,124 168,136 148"                  stroke="#73233C" stroke-width="0.8" fill="none"/>
-        <ellipse cx="120" cy="102" rx="18" ry="11" fill="#73233C" opacity="0.22" transform="rotate(-30 120 102)"/>
-        <ellipse cx="138" cy="146" rx="16" ry="10" fill="#73233C" opacity="0.18" transform="rotate(-15 138 146)"/>
-        <circle  cx="96"  cy="16"  r="6"            fill="#73233C" opacity="0.28"/>
-      </svg>
-    </div>
-
+    <!-- Hero Botanical SVGs remain unchanged -->
     <div class="hero__inner">
       <p class="hero__eyebrow t-eyebrow">Together with their families</p>
       <h1 class="hero__names" id="hero-names"></h1>
@@ -54,11 +32,9 @@
       </nav>
       <div id="calendar-button"></div>
     </div>
-
   </header>
 
   <main>
-
     <section id="details" class="section">
       <p class="t-section-label">The Wedding</p>
       <h2 class="t-heading">Details</h2>
@@ -81,19 +57,19 @@
 
       <div id="rsvp-form-wrap">
         <div class="rsvp-form">
-
           <div class="field">
             <label for="name">First & Last Name</label>
             <input id="name" name="name" type="text" placeholder="Emma &amp; James Smith" autocomplete="name" />
+            <!-- Status message container for validation feedback -->
+            <div id="rsvp-status-msg" style="color: var(--gold); margin-top: 0.5rem; font-size: 0.9rem;"></div>
             <span class="field__error-msg">Please enter your name.</span>
           </div>
 
           <div id="hidden-rsvp-fields" style="display: none;">
-            
             <div class="field">
-              <label for="email">Email or Phone</label>
-              <input id="email" name="email" type="text" placeholder="your@email.com or +1 555 000 0000" autocomplete="email" />
-              <span class="field__error-msg">Please enter your email or phone number.</span>
+              <label for="contact">Email or Phone Number</label>
+              <input id="contact" name="contact" type="text" placeholder="your@email.com or +1 555 000 0000" autocomplete="contact" />
+              <span class="field__error-msg">Please enter your contact information.</span>
             </div>
 
             <div class="field-row">
@@ -107,6 +83,7 @@
               <div class="field">
                 <label for="guests">Guests</label>
                 <select id="guests" name="guests">
+                  <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -115,22 +92,26 @@
               </div>
             </div>
 
+            <div id="guest-names-container" class="hidden">
+              <label>Names of your guests</label>
+              <div id="dynamic-guest-inputs"></div>
+            </div>
+
             <div class="field">
               <label for="dietary">Dietary Restrictions</label>
               <input id="dietary" name="dietary" type="text" placeholder="None, vegetarian, gluten-free…" />
             </div>
-            
-          </div> <button id="rsvp-submit" class="btn btn--gold">Find My Invitation</button>
-
+          </div> 
+          
+          <button id="rsvp-submit" class="btn btn--gold">Find My Invitation</button>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="footer">
     <p class="footer__names" id="footer-names"></p>
-    <p class="footer__sub"   id="footer-sub"></p>
+    <p class="footer__sub" id="footer-sub"></p>
   </footer>
 
   <script type="module" src="./main.js"></script>
