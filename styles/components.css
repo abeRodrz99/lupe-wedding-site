@@ -529,7 +529,7 @@
 @media (max-width: 1024px) {
   :root {
     --thumb-h: 320px;
-    --focus-w: 80%; 
+    --focus-w: 70%; 
   }
   .gallery-strip { width: 100%; }
   .gallery-thumb { flex: 1; min-width: 0; }
@@ -573,8 +573,8 @@
   .gallery-thumb,
   .gallery-thumb.expanded {
     /* 👇 Add these two lines to control the width specifically on phones */
-    flex: 0 0 75%;       
-    min-width: 75%;      
+    flex: 0 0 70%;       
+    min-width: 70%;      
     
     height: 300px;
     border-radius: 8px;
