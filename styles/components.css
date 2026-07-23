@@ -536,7 +536,7 @@ position: relative;
 @media (max-width: 1024px) {
   :root {
     --thumb-h: 320px;
-    --focus-w: 60%; 
+    --focus-w: 50%; 
   }
   .gallery-strip { width: 100%; }
   .gallery-thumb { flex: 1; min-width: 0; }
