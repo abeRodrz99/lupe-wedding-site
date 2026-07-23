@@ -1,7 +1,7 @@
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 .hero {
   min-height: 75svh;
-  display: flex;
+  display: column;
   align-items: center;
   justify-content: center;
   text-align: center;

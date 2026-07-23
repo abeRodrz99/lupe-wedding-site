@@ -2,6 +2,7 @@
 import { couple, ceremony, reception, hotel, directions, calendarEvent } from './data/weddingData.js';
 import { initRSVP }   from './components/rsvp.js';
 import { initReveal } from './components/reveal.js';
+import { initGallery } from './components/gallery.js';
 
 // ── Render hero ───────────────────────────────────────────────────────────────
 document.getElementById('hero-names').innerHTML =
@@ -142,7 +143,9 @@ if (couple.rsvpDeadline) {
   deadlineEl.textContent = `Kindly Reply By ${couple.rsvpDeadline}`;
 }
 
+
 // ── Init components ───────────────────────────────────────────────────────────
 initReveal();
 initRSVP();
+initGallery();
 

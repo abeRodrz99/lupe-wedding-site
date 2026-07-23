@@ -17,7 +17,6 @@
   </nav>
 
   <header class="hero">
-    <!-- Hero Botanical SVGs remain unchanged -->
     <div class="hero__inner">
       <p class="hero__eyebrow t-eyebrow">Together with their families</p>
       <h1 class="hero__names" id="hero-names"></h1>
@@ -32,6 +31,7 @@
       </nav>
       <div id="calendar-button"></div>
     </div>
+    <div id="hero-gallery"></div>
   </header>
 
   <main>
@@ -113,6 +113,14 @@
     <p class="footer__names" id="footer-names"></p>
     <p class="footer__sub" id="footer-sub"></p>
   </footer>
+
+  <div id="hero-gallery" style="margin-top: 3rem; width: 100%; max-width: 900px; padding: 0 1rem;"></div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    <span class="lightbox-caption" id="lightbox-caption"></span>
+  </div>
 
   <script type="module" src="./main.js"></script>
 </body>
