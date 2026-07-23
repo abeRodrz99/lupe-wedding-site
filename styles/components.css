@@ -573,8 +573,8 @@
   .gallery-thumb,
   .gallery-thumb.expanded {
     /* 👇 Add these two lines to control the width specifically on phones */
-    flex: 0 0 40%;       
-    min-width: 40%;      
+    flex: 0 0 80%;       
+    min-width: 80%;      
     
     height: 300px;
     border-radius: 8px;
