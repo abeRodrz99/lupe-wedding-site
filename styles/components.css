@@ -523,25 +523,63 @@
   white-space: nowrap;
 }
 
-/* ── RESPONSIVE MOBILE FIXES ───────────────────────────── */
-@media (max-width: 768px) {
-  :root {
-    --thumb-h: 200px; 
-    --focus-w: 40%;
-    --base-w: 25%;
+/* ── COMPREHENSIVE RESPONSIVE DESIGN ───────────────────────── */
+
+/* 1. Laptops & Small Desktops (max-width: 1024px) 
+   Maintains the horizontal row, but scales down the massive desktop sizing so it doesn't bleed off the edges. */
+@media (max-width: 1024px) {
+:root {
+    --thumb-h: 320px;
+    --focus-w: 55%; /* Safe percentage for the center image */
   }
 
   .gallery-strip {
-    gap: 4px; 
-    border-radius: 8px; 
+    width: 100%;
   }
 
+  /* CRITICAL: min-width: 0 strips the browser's default sizing and forces the side photos to shrink and fit the remaining space */
   .gallery-thumb {
-    border-radius: 6px;
+    flex: 1; 
+    min-width: 0; 
   }
-  
+
   .gallery-thumb.expanded {
     flex: 0 0 var(--focus-w);
-    min-width: var(--focus-w);
+    min-width: 0; 
+  }
+}
+
+/* 2. Tablets & iPads (max-width: 820px)
+   Touch devices don't have reliable hover states. We break to the vertical stack here to ensure easy tapping. */
+@media (max-width: 820px) {
+  .gallery-strip {
+    flex-direction: column;
+    height: auto;
+    gap: 24px;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .gallery-thumb,
+  .gallery-thumb.expanded {
+    width: 100%;
+    min-width: 100%;
+    height: 380px;
+    flex: none; /* Disables the desktop flex math entirely */
+    border-radius: 10px;
+  }
+}
+
+/* 3. Mobile Phones (max-width: 480px)
+   Keeps the vertical stack, but tightens the gaps and shrinks the height so one photo doesn't consume the entire screen. */
+@media (max-width: 480px) {
+  .gallery-strip {
+    gap: 12px;
+  }
+
+  .gallery-thumb,
+  .gallery-thumb.expanded {
+    height: 260px;
+    border-radius: 8px;
   }
 }
