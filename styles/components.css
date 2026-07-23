@@ -525,61 +525,54 @@
 
 /* ── COMPREHENSIVE RESPONSIVE DESIGN ───────────────────────── */
 
-/* 1. Laptops & Small Desktops (max-width: 1024px) 
-   Maintains the horizontal row, but scales down the massive desktop sizing so it doesn't bleed off the edges. */
+/* 1. Laptops & Small Desktops (max-width: 1024px) */
 @media (max-width: 1024px) {
-:root {
+  :root {
     --thumb-h: 320px;
-    --focus-w: 55%; /* Safe percentage for the center image */
+    --focus-w: 55%; 
   }
-
-  .gallery-strip {
-    width: 100%;
-  }
-
-  /* CRITICAL: min-width: 0 strips the browser's default sizing and forces the side photos to shrink and fit the remaining space */
-  .gallery-thumb {
-    flex: 1; 
-    min-width: 0; 
-  }
-
-  .gallery-thumb.expanded {
-    flex: 0 0 var(--focus-w);
-    min-width: 0; 
-  }
+  .gallery-strip { width: 100%; }
+  .gallery-thumb { flex: 1; min-width: 0; }
+  .gallery-thumb.expanded { flex: 0 0 var(--focus-w); min-width: 0; }
 }
 
-/* 2. Tablets & iPads (max-width: 820px)
-   Touch devices don't have reliable hover states. We break to the vertical stack here to ensure easy tapping. */
+/* 2. Tablets & Mobile Phones - Horizontal Swipe Gallery */
 @media (max-width: 820px) {
   .gallery-strip {
-    flex-direction: column;
-    height: auto;
-    gap: 24px;
+    width: 100vw;              /* Break out slightly to use full screen width */
+    max-width: 100%;
+    overflow-x: auto;          /* Enable horizontal swiping */
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory; /* Snap cleanly to each photo */
+    scroll-padding: 0 16px;
+    gap: 12px;
     background: transparent;
     box-shadow: none;
+    -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+    scrollbar-width: none;     /* Hide scrollbar in Firefox */
+  }
+  
+  /* Hide scrollbar in Chrome/Safari/Edge */
+  .gallery-strip::-webkit-scrollbar {
+    display: none; 
   }
 
+  /* Force all thumbnails (even expanded ones) to be uniform swipeable cards */
   .gallery-thumb,
   .gallery-thumb.expanded {
-    width: 100%;
-    min-width: 100%;
-    height: 380px;
-    flex: none; /* Disables the desktop flex math entirely */
-    border-radius: 10px;
+    flex: 0 0 85%;             /* Each photo takes up 85% of the screen */
+    min-width: 85%;
+    height: 340px;             /* Nice tall height for portraits */
+    scroll-snap-align: center; /* Centers the photo on swipe */
+    border-radius: 12px;
   }
 }
 
-/* 3. Mobile Phones (max-width: 480px)
-   Keeps the vertical stack, but tightens the gaps and shrinks the height so one photo doesn't consume the entire screen. */
+/* 3. Small Mobile Phones */
 @media (max-width: 480px) {
-  .gallery-strip {
-    gap: 12px;
-  }
-
   .gallery-thumb,
   .gallery-thumb.expanded {
-    height: 260px;
+    height: 300px;
     border-radius: 8px;
   }
 }
