@@ -529,7 +529,7 @@
 @media (max-width: 1024px) {
   :root {
     --thumb-h: 320px;
-    --focus-w: 40%; 
+    --focus-w: 80%; 
   }
   .gallery-strip { width: 100%; }
   .gallery-thumb { flex: 1; min-width: 0; }
@@ -560,8 +560,8 @@
   /* Force all thumbnails (even expanded ones) to be uniform swipeable cards */
   .gallery-thumb,
   .gallery-thumb.expanded {
-    flex: 0 0 40%;             /* Each photo takes up 85% of the screen */
-    min-width: 40%;
+    flex: 0 0 60%;             /* Each photo takes up 85% of the screen */
+    min-width: 60%;
     height: 340px;             /* Nice tall height for portraits */
     scroll-snap-align: center; /* Centers the photo on swipe */
     border-radius: 12px;
@@ -573,8 +573,8 @@
   .gallery-thumb,
   .gallery-thumb.expanded {
     /* 👇 Add these two lines to control the width specifically on phones */
-    flex: 0 0 80%;       
-    min-width: 80%;      
+    flex: 0 0 75%;       
+    min-width: 75%;      
     
     height: 300px;
     border-radius: 8px;
