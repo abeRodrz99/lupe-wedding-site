@@ -3,6 +3,7 @@ import { couple, ceremony, reception, hotel, directions, calendarEvent } from '.
 import { initRSVP }   from './components/rsvp.js';
 import { initReveal } from './components/reveal.js';
 import { initGallery } from './components/gallery.js';
+import { initFAQ } from './components/faq.js';
 
 // ── Render hero ───────────────────────────────────────────────────────────────
 document.getElementById('hero-names').innerHTML =
@@ -148,4 +149,4 @@ if (couple.rsvpDeadline) {
 initReveal();
 initRSVP();
 initGallery();
-
+initFAQ();

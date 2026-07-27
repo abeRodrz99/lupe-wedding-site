@@ -1,0 +1,62 @@
+/* styles/faq.css */
+
+#faq .section-title {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.faq-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(115, 35, 60, 0.15); /* Using your subtle crimson tone */
+  margin-bottom: 1rem;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1rem 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+  color: var(--crimson);
+}
+
+.faq-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  font-family: var(--font-serif);
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 200px; /* Adjust if you have very long answers */
+  padding-bottom: 1.5rem;
+}
