@@ -54,6 +54,22 @@
   line-height: 1.05;
 }
 
+.hero__eyebrow,
+.hero__sub-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  opacity: 0.8;
+}
+
+/* Give the line below the names a slight top margin so it doesn't hug the names */
+.hero__sub-eyebrow {
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+
 .hero__amp {
   font-style: italic;
   color: var(--crimson);

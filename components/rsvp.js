@@ -125,23 +125,41 @@ export function initRSVP() {
       return;
     }
 
-    // STATE 2: SUBMISSION MODE (Send RSVP)
+    // ── STEP 2: Final Submit ─────────────────────────────────────
+    const contactInput = document.getElementById('contact');
+    const contactValue = contactInput ? contactInput.value.trim() : '';
+
+    // 1. Email Validation Check
+    if (!contactValue || !contactValue.includes('@')) {
+      statusMsg.textContent = "Please enter a valid email address.";
+      statusMsg.style.color = "var(--crimson, red)";
+      return;
+    }
+
+    // 2. Button Loading State
     setLoading(submitBtn, true, 'Sending…');
-    submitBtn.disabled = true; 
 
+    // 3. Collect Guest Names
     const guestNameFields = document.querySelectorAll('.guest-name-field');
-    const guestNamesArray = Array.from(guestNameFields).map(input => input.value);
+    const guestNamesArray = Array.from(guestNameFields).map(input => input.value.trim()).filter(Boolean);
 
+    // 4. Safely construct the Airtable Payload
     const payload = {
       "Name": nameInput.value.trim(),
-      "Contact Info": document.getElementById('contact').value,
-      "Attending": document.getElementById('attending').value === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines',
-      "Guests": parseInt(guestsSelect.value, 10),
+      "Contact Info": contactValue,
+      "Attending": document.getElementById('attending')?.value === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines',
+      "Guests": parseInt(document.getElementById('guests')?.value || '1', 10),
       "Guest Names": guestNamesArray.join(', '),
-      "Dietary": document.getElementById('dietary').value
+      "Dietary": document.getElementById('dietary')?.value || ''
     };
-    
-    await submitToAirtable(payload);
-    showSuccess(formWrap);
+
+    try {
+      await submitToAirtable(payload);
+      showSuccess(formWrap);
+    } catch (error) {
+      console.error("Submission error:", error);
+      statusMsg.textContent = "There was an error submitting your RSVP. Please try again.";
+      setLoading(submitBtn, false, 'Send RSVP');
+    }
   });
 }
