@@ -1,47 +1,54 @@
 // components/faq.js
 import { faqData } from '../data/faqData.js';
 
-export function initFAQ() {
+// Accepts either a plain string or { en, es }
+const pick = (value, locale) =>
+  value && typeof value === 'object' && !Array.isArray(value)
+    ? (value[locale] ?? value.en)
+    : value;
+
+export function initFAQ(locale = 'en') {
   const faqContainer = document.getElementById('faq-container');
   if (!faqContainer) return;
 
-  // Dynamically render the HTML
+  faqContainer.innerHTML = '';
+
   faqData.forEach((item, index) => {
+    const question = pick(item.question, locale);
+    const answer   = pick(item.answer, locale);
+
     const faqElement = document.createElement('div');
     faqElement.className = 'faq-item';
-    
+
     faqElement.innerHTML = `
       <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-${index}">
-        ${item.question}
+        ${question}
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer" id="faq-answer-${index}">
-        ${[].concat(item.answer).map(p => `<p>${p}</p>`).join('')}
+        ${[].concat(answer).map((p) => `<p>${p}</p>`).join('')}
       </div>
     `;
 
     faqContainer.appendChild(faqElement);
   });
 
-  // Add click logic for the accordion
-  const faqItems = document.querySelectorAll('.faq-item');
-  
-  faqItems.forEach(item => {
+  const faqItems = faqContainer.querySelectorAll('.faq-item');
+
+  faqItems.forEach((item) => {
     const questionBtn = item.querySelector('.faq-question');
-    
+
     questionBtn.addEventListener('click', () => {
-      // Optional: Close all other open FAQs when one is clicked
-      faqItems.forEach(otherItem => {
+      faqItems.forEach((otherItem) => {
         if (otherItem !== item && otherItem.classList.contains('active')) {
           otherItem.classList.remove('active');
           otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
         }
       });
 
-      // Toggle current FAQ
       const isActive = item.classList.contains('active');
       item.classList.toggle('active');
-      questionBtn.setAttribute('aria-expanded', !isActive);
+      questionBtn.setAttribute('aria-expanded', String(!isActive));
     });
   });
 }

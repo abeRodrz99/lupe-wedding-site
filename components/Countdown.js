@@ -1,8 +1,11 @@
+// components/Countdown.js
 // ── Countdown bar + scroll-swap nav ─────────────────────────────────────────
 // Shows a live months / days / hours countdown to the ceremony in the fixed top
 // slot. Once the visitor scrolls past the hero the countdown slides out and the
 // site nav slides in to replace it; scrolling back up restores the countdown.
 // Styles live in ../styles/countdown.css
+
+import { t } from '../data/strings.js';
 
 /* ── Calendar math ─────────────────────────────────────────────────────────
    Months are calendar months, not fixed 30-day blocks, so "3 months" always
@@ -44,12 +47,11 @@ export function timeUntil(target, now = new Date()) {
   return { past: false, months, days, hours };
 }
 
-const plural = (n, word) => `${word}${n === 1 ? '' : 's'}`;
-
 // ── Init ────────────────────────────────────────────────────────────────────
 
 export function initCountdown({
   targetIso,
+  locale = 'en',
   countdownSelector = '#countdown-bar',
   navSelector       = '#site-nav',
   heroSelector      = '.hero',
@@ -60,6 +62,10 @@ export function initCountdown({
 
   const target = new Date(targetIso);
   if (Number.isNaN(target.getTime())) return;
+
+  // "Month" vs "Months", "Mes" vs "Meses" — picks the right key per language.
+  const unitLabel = (n, unit) =>
+    t(`countdown.${unit}${n === 1 ? '' : 's'}`, locale);
 
   const inner    = bar.querySelector('.countdown');
   const valueEls = {
@@ -77,28 +83,32 @@ export function initCountdown({
   let timerId = null;
 
   function tick() {
-    const t = timeUntil(target);
+    const time = timeUntil(target);
 
-    if (t.past) {
+    if (time.past) {
       inner.classList.add('countdown--today');
-      bar.setAttribute('aria-label', 'The wedding day has arrived');
+      bar.setAttribute('aria-label', t('countdown.arrived', locale));
       if (timerId) clearInterval(timerId);
       timerId = null;
       return;
     }
 
-    valueEls.months.textContent = t.months;
-    valueEls.days.textContent   = t.days;
-    valueEls.hours.textContent  = t.hours;
+    valueEls.months.textContent = time.months;
+    valueEls.days.textContent   = time.days;
+    valueEls.hours.textContent  = time.hours;
 
-    labelEls.months.textContent = plural(t.months, 'Month');
-    labelEls.days.textContent   = plural(t.days, 'Day');
-    labelEls.hours.textContent  = plural(t.hours, 'Hour');
+    labelEls.months.textContent = unitLabel(time.months, 'month');
+    labelEls.days.textContent   = unitLabel(time.days, 'day');
+    labelEls.hours.textContent  = unitLabel(time.hours, 'hour');
 
+    const lower = (n, unit) => unitLabel(n, unit).toLowerCase();
     bar.setAttribute(
       'aria-label',
-      `${t.months} ${plural(t.months, 'month')}, ${t.days} ${plural(t.days, 'day')} ` +
-      `and ${t.hours} ${plural(t.hours, 'hour')} until the wedding`
+      `${time.months} ${lower(time.months, 'month')}, ` +
+      `${time.days} ${lower(time.days, 'day')} ` +
+      `${t('countdown.and', locale)} ` +
+      `${time.hours} ${lower(time.hours, 'hour')} ` +
+      `${t('countdown.ariaTail', locale)}`
     );
   }
 
@@ -197,6 +207,4 @@ export function initCountdown({
     );
     sections.forEach((s) => observer.observe(s));
   }
-
-  
 }

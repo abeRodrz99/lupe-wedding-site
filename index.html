@@ -10,6 +10,9 @@
 </head>
 <body>
 
+  <!-- Language toggle: fixed, outside the countdown/nav swap so it's always visible -->
+  <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Cambiar a español">ES</button>
+
   <!-- Countdown and nav share the same fixed slot at the top of the page.
        The countdown shows first; the nav swaps in past the hero. See
        components/countdown.js + styles/countdown.css -->
@@ -18,43 +21,44 @@
       <div class="countdown__units">
         <div class="countdown__unit" data-unit="months">
           <span class="countdown__value">—</span>
-          <span class="countdown__unit-label">Months</span>
+          <span class="countdown__unit-label" data-i18n="countdown.months">Months</span>
         </div>
         <div class="countdown__unit" data-unit="days">
           <span class="countdown__value">—</span>
-          <span class="countdown__unit-label">Days</span>
+          <span class="countdown__unit-label" data-i18n="countdown.days">Days</span>
         </div>
         <div class="countdown__unit" data-unit="hours">
           <span class="countdown__value">—</span>
-          <span class="countdown__unit-label">Hours</span>
+          <span class="countdown__unit-label" data-i18n="countdown.hours">Hours</span>
         </div>
       </div>
-      <p class="countdown__label">Until we say I do</p>
-      <p class="countdown__today">Today is the day</p>
+      <p class="countdown__label" data-i18n="countdown.label">Until we say I do</p>
+      <p class="countdown__today" data-i18n="countdown.today">Today is the day</p>
     </div>
   </div>
 
   <nav class="top-bar site-nav" id="site-nav" aria-label="Site Navigation" data-state="hidden">
-    <a href="#details">Details</a>
-    <a href="#travel">Travel</a>
-    <a href="#rsvp">RSVP</a>
-    <a href="#faq">FAQ</a>
+    <a href="#details" data-i18n="nav.details">Details</a>
+    <a href="#travel"  data-i18n="nav.travel">Travel</a>
+    <a href="#rsvp"    data-i18n="nav.rsvp">RSVP</a>
+    <a href="#faq"     data-i18n="nav.faq">FAQ</a>
   </nav>
 
   <header class="hero">
     <div class="hero__inner">
-      <p class="hero__eyebrow t-eyebrow">Together with their families</p>
+      <p class="hero__eyebrow t-eyebrow" data-i18n="hero.together">Together with their families</p>
       <h1 class="hero__names" id="hero-names"></h1>
+      <p class="hero__invite" data-i18n="hero.invite">invite you to their wedding</p>
       <div class="hero__rule"></div>
       <p class="hero__date" id="hero-date"></p>
       <nav class="hero__nav" aria-label="Page sections">
-        <a href="#details">Details</a>
+        <a href="#details" data-i18n="nav.details">Details</a>
         <span aria-hidden="true">·</span>
-        <a href="#travel">Travel</a>
+        <a href="#travel" data-i18n="nav.travel">Travel</a>
         <span aria-hidden="true">·</span>
-        <a href="#rsvp">RSVP</a>
+        <a href="#rsvp" data-i18n="nav.rsvp">RSVP</a>
         <span aria-hidden="true">·</span>
-        <a href="#faq">FAQ</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
       </nav>
       <div id="calendar-button"></div>
     </div>
@@ -63,52 +67,56 @@
 
   <main>
     <section id="details" class="section">
-      <p class="t-section-label">The Wedding</p>
-      <h2 class="t-heading">Details</h2>
+      <p class="t-section-label" data-i18n="details.label">The Wedding</p>
+      <h2 class="t-heading" data-i18n="details.heading">Details</h2>
       <div class="cards" id="cards"></div>
     </section>
 
     <section id="travel" class="section section--tinted">
-      <p class="t-section-label">Travel &amp; Stay</p>
-      <h2 class="t-heading">Getting There</h2>
+      <p class="t-section-label" data-i18n="travel.label">Travel &amp; Stay</p>
+      <h2 class="t-heading" data-i18n="travel.heading">Getting There</h2>
       <div class="hotel" id="hotel-block"></div>
       <div class="directions">
-        <p class="t-section-label t-section-label--left">Getting Here</p>
+        <p class="t-section-label t-section-label--left" data-i18n="travel.gettingHere">Getting Here</p>
         <p class="directions__body" id="directions-body"></p>
       </div>
     </section>
 
     <section id="rsvp" class="section section--dark">
       <p class="t-section-label t-section-label--gold" id="rsvp-deadline"></p>
-      <h2 class="t-heading t-heading--light">RSVP</h2>
+      <h2 class="t-heading t-heading--light" data-i18n="rsvp.heading">RSVP</h2>
 
       <div id="rsvp-form-wrap">
         <div class="rsvp-form">
           <div class="field">
-            <label for="name">First & Last Name</label>
-            <input id="name" name="name" type="text" placeholder="Emma &amp; James Smith" autocomplete="name" />
+            <label for="name" data-i18n="rsvp.nameLabel">First &amp; Last Name</label>
+            <input id="name" name="name" type="text" autocomplete="name"
+                   placeholder="Emma &amp; James Smith"
+                   data-i18n-placeholder="rsvp.namePlaceholder" />
             <!-- Status message container for validation feedback -->
             <div id="rsvp-status-msg" style="color: var(--gold); margin-top: 0.5rem; font-size: 0.9rem;"></div>
-            <span class="field__error-msg">Please enter your name.</span>
+            <span class="field__error-msg" data-i18n="rsvp.errNoName">Please enter your name.</span>
           </div>
 
           <div id="hidden-rsvp-fields" style="display: none;">
             <div class="field">
-              <label for="contact">Email or Phone Number</label>
-              <input id="contact" name="contact" type="text" placeholder="your@email.com or +1 555 000 0000" autocomplete="contact" />
-              <span class="field__error-msg">Please enter your contact information.</span>
+              <label for="contact" data-i18n="rsvp.contactLabel">Email or Phone Number</label>
+              <input id="contact" name="contact" type="email" autocomplete="email"
+                placeholder="your@email.com"
+                data-i18n-placeholder="rsvp.contactPlaceholder" />
+              <span class="field__error-msg" data-i18n="rsvp.errNoContact">Please enter your contact information.</span>
             </div>
 
             <div class="field-row">
               <div class="field">
-                <label for="attending">Attending?</label>
+                <label for="attending" data-i18n="rsvp.attendingLabel">Attending?</label>
                 <select id="attending" name="attending">
-                  <option value="yes">Joyfully Accepts</option>
-                  <option value="no">Regretfully Declines</option>
+                  <option value="yes" data-i18n="rsvp.accept">Joyfully Accepts</option>
+                  <option value="no"  data-i18n="rsvp.decline">Regretfully Declines</option>
                 </select>
               </div>
               <div class="field">
-                <label for="guests">Guests</label>
+                <label for="guests" data-i18n="rsvp.guestsLabel">Guests</label>
                 <select id="guests" name="guests">
                   <option value="0">0</option>
                   <option value="1">1</option>
@@ -120,24 +128,26 @@
             </div>
 
             <div id="guest-names-container" class="hidden">
-              <label>Names of your guests</label>
+              <label data-i18n="rsvp.guestNamesLabel">Names of your guests</label>
               <div id="dynamic-guest-inputs"></div>
             </div>
 
             <div class="field">
-              <label for="dietary">Dietary Restrictions</label>
-              <input id="dietary" name="dietary" type="text" placeholder="None, vegetarian, gluten-free…" />
+              <label for="dietary" data-i18n="rsvp.dietaryLabel">Dietary Restrictions</label>
+              <input id="dietary" name="dietary" type="text"
+                     placeholder="None, vegetarian, gluten-free…"
+                     data-i18n-placeholder="rsvp.dietaryPlaceholder" />
             </div>
-          </div> 
-          
-          <button id="rsvp-submit" class="btn btn--gold">Find My Invitation</button>
+          </div>
+
+          <button id="rsvp-submit" class="btn btn--gold" data-i18n="rsvp.findBtn">Find My Invitation</button>
         </div>
       </div>
     </section>
 
     <section id="faq" class="section section--tinted">
-      <!-- <p class="t-section-label">Good to Know</p> -->
-      <h2 class="t-heading">Frequently Asked Questions</h2>
+      <!-- <p class="t-section-label" data-i18n="faq.label">Good to Know</p> -->
+      <h2 class="t-heading" data-i18n="faq.heading">Frequently Asked Questions</h2>
       <!-- Populated by components/faq.js from data/faqData.js -->
       <div class="faq" id="faq-container"></div>
     </section>
@@ -147,8 +157,6 @@
     <p class="footer__names" id="footer-names"></p>
     <p class="footer__sub" id="footer-sub"></p>
   </footer>
-
-  <div id="hero-gallery" style="margin-top: 3rem; width: 100%; max-width: 900px; padding: 0 1rem;"></div>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
     <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>

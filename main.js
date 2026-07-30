@@ -1,20 +1,42 @@
 // ── Entry point ──────────────────────────────────────────────────────────────
 import { couple, events, hotel, directions, calendarEvent } from './data/weddingData.js';
+import { t } from './data/strings.js';
+import { detectLocale, setLocale } from './lib/i18n.js';
 import { initRSVP }   from './components/rsvp.js';
 import { initReveal } from './components/reveal.js';
 import { initGallery } from './components/gallery.js';
-import { initCountdown } from './components/Countdown.js';
+import { initCountdown } from './components/countdown.js';
 import { initFAQ } from './components/faq.js';
 
 // JS is running — let countdown.css drop its no-JS fallback.
 document.documentElement.classList.remove('no-js');
+
+// ── Locale ────────────────────────────────────────────────────────────────────
+const locale = detectLocale();
+document.documentElement.lang = locale;
+
+// Apply every static data-i18n string in one pass
+document.querySelectorAll('[data-i18n]').forEach((el) => {
+  el.textContent = t(el.dataset.i18n, locale);
+});
+document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+  el.placeholder = t(el.dataset.i18nPlaceholder, locale);
+});
+
+// Toggle
+const toggleBtn = document.getElementById('lang-toggle');
+if (toggleBtn) {
+  toggleBtn.textContent = t('lang.toggle', locale);
+  toggleBtn.setAttribute('aria-label', t('lang.toggleAria', locale));
+  toggleBtn.addEventListener('click', () => setLocale(locale === 'es' ? 'en' : 'es'));
+}
 
 // ── Render hero ───────────────────────────────────────────────────────────────
 document.getElementById('hero-names').innerHTML =
   `${couple.partner1} <span class="hero__amp">&amp;</span> ${couple.partner2}`;
 
 document.getElementById('hero-date').textContent =
-  `${couple.date} · ${couple.location}`;
+  `${t('couple.date', locale)} · ${couple.location}`;
 
 // ── Render calendar button ────────────────────────────────────────────────────
 function renderCalendarButton(event) {
@@ -47,7 +69,7 @@ function renderCalendarButton(event) {
           <line x1="8" y1="2" x2="8" y2="6"/>
           <line x1="3" y1="10" x2="21" y2="10"/>
         </svg>
-        + Add to Calendar
+        ${t('hero.calendarBtn', locale)}
         <svg class="cal-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="6 9 12 15 18 9"/>
         </svg>
@@ -63,7 +85,7 @@ function renderCalendarButton(event) {
             </svg>
           </div>
           <div class="cal-label">
-            <span class="cal-label-main">Google Calendar</span>
+            <span class="cal-label-main">${t('hero.google', locale)}</span>
           </div>
         </a>
         <a href="${icsUrl}" class="cal-option" download="wedding.ics">
@@ -73,7 +95,7 @@ function renderCalendarButton(event) {
             </svg>
           </div>
           <div class="cal-label">
-            <span class="cal-label-main">Apple / Outlook</span>
+            <span class="cal-label-main">${t('hero.apple', locale)}</span>
           </div>
         </a>
       </div>
@@ -102,39 +124,37 @@ function renderCard(event) {
   return `
     <div class="card">
       <div class="card__icon">${event.icon}</div>
-      <p class="card__tag">${event.title}</p>
-      ${event.day ? `<p class="card__day">${event.day}</p>` : ''}
+      <p class="card__tag">${event.title?.[locale] ?? event.title}</p>
+      ${event.day ? `<p class="card__day">${event.day?.[locale] ?? event.day}</p>` : ''}
       <p class="card__time">${event.time}</p>
-      <p class="card__venue">${event.venue}</p>
+      <p class="card__venue">${event.venue?.[locale] ?? event.venue}</p>
       <p class="card__address">${event.address ? `${event.address}<br>` : ''}${event.city}</p>
       ${event.mapUrl || event.venueUrl ? `
       <div class="card__actions">
-        ${event.mapUrl ? `<a href="${event.mapUrl}" class="btn btn--outline" target="_blank" rel="noopener">Map</a>` : ''}
-        ${event.venueUrl ? `<a href="${event.venueUrl}" class="btn btn--outline" target="_blank" rel="noopener">Venue Site</a>` : ''}
+        ${event.mapUrl ? `<a href="${event.mapUrl}" class="btn btn--outline" target="_blank" rel="noopener">${t('card.map', locale)}</a>` : ''}
+        ${event.venueUrl ? `<a href="${event.venueUrl}" class="btn btn--outline" target="_blank" rel="noopener">${t('card.venueSite', locale)}</a>` : ''}
       </div>` : ''}
     </div>
   `;
 }
 
-document.getElementById('cards').innerHTML =
-  events.map(renderCard).join('');
+document.getElementById('cards').innerHTML = events.map(renderCard).join('');
 
 // ── Render hotel ──────────────────────────────────────────────────────────────
 document.getElementById('hotel-block').innerHTML = `
-  <p class="hotel__tag">Reserve Your Room</p>
+  <p class="hotel__tag">${t('travel.reserveRoom', locale)}</p>
   <h3 class="hotel__name">${hotel.name}</h3>
   <p class="hotel__address">${hotel.address}</p>
   <dl class="hotel__meta">
-    <div class="hotel__meta-row"><dt>Phone</dt><dd>${hotel.phone}</dd></div>
+    <div class="hotel__meta-row"><dt>${t('travel.phone', locale)}</dt><dd>${hotel.phone}</dd></div>
   </dl>
-  <a href="${hotel.bookUrl}" target="_blank" class="btn btn--gold">Book Your Room</a>
+  <a href="${hotel.bookUrl}" target="_blank" rel="noopener" class="btn btn--gold">${t('travel.bookRoom', locale)}</a>
 `;
 
 // ── Render directions ─────────────────────────────────────────────────────────
-const dir = document.getElementById('directions-body');
-dir.innerHTML = `
-  <p>${directions.body}</p>
-  ${directions.buttonUrl ? `<a href="${directions.buttonUrl}" target="_blank" class="btn btn--outline" target="_blank" rel="noopener">Get Directions</a>` : ''}
+document.getElementById('directions-body').innerHTML = `
+  <p>${t('directions.body', locale)}</p>
+  ${directions.buttonUrl ? `<a href="${directions.buttonUrl}" class="btn btn--outline" target="_blank" rel="noopener">${t('travel.getDirections', locale)}</a>` : ''}
 `;
 
 // ── Render footer ─────────────────────────────────────────────────────────────
@@ -142,18 +162,17 @@ document.getElementById('footer-names').textContent =
   `${couple.partner1} & ${couple.partner2}`;
 
 document.getElementById('footer-sub').textContent =
-  `${couple.date} · Armadillo de los Infante, San Luis Potosí`;
+  `${t('couple.date', locale)} · ${couple.location}`;
 
 // ── Render RSVP deadline ──────────────────────────────────────────────────────
 const deadlineEl = document.getElementById('rsvp-deadline');
 if (couple.rsvpDeadline) {
-  deadlineEl.textContent = `Kindly Reply By ${couple.rsvpDeadline}`;
+  deadlineEl.textContent = `${t('rsvp.deadlinePrefix', locale)} ${couple.rsvpDeadline}`;
 }
-
 
 // ── Init components ───────────────────────────────────────────────────────────
 initReveal();
-initRSVP();
+initRSVP(locale);
 initGallery();
-initFAQ();
-initCountdown({ targetIso: calendarEvent.startIso });
+initFAQ(locale);
+initCountdown({ targetIso: calendarEvent.startIso, locale });

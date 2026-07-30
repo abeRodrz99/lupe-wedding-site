@@ -54,6 +54,16 @@
   line-height: 1.05;
 }
 
+.hero__invite {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  margin-top: 1.5rem;
+}
+
 .hero__eyebrow,
 .hero__sub-eyebrow {
   font-family: var(--font-sans);

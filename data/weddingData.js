@@ -13,6 +13,7 @@ export const calendarEvent = {
   location: 'Church of the Immaculate Conception, Calle Sta. Isabel 100, Armadillo de los Infante, San Luis Potosí, Mexico',
   startUtc: '20270416T220000Z',
   endUtc:   '20270417T050000Z',
+  startIso: '2027-04-16T22:00:00Z',
   // Same moment as startUtc, in ISO form — used by the countdown bar.
   // 5:00 PM in Armadillo de los Infante (UTC-5 in April) = 22:00 UTC.
   startIso: '2027-04-16T22:00:00Z',
@@ -30,17 +31,17 @@ export const calendarEvent = {
 // With neither mapUrl nor venueUrl, the whole button row is skipped.
 export const events = [
   {
-    title:      'Ceremony',
+    title:  { en: 'Ceremony', es: 'Ceremonia' },
     icon:       '✦',
     time:       '5:00 PM',
-    venue:      'Church of the Immaculate Conception',
+    venue:  { en: 'Church of the Immaculate Conception', es: 'Iglesia de la Inmaculada Concepción' },
     address:    'Calle Sta. Isabel 100',
     city:       'Armadillo de los Infante, S.L.P.',
     mapUrl:     'https://share.google/XOYjXNEYD3YMDzYut',
     venueUrl:   null,
   },
   {
-    title:      'Reception',
+    title:  { en: 'Reception', es: 'Recepción' },
     icon:       '✦',
     time:       '6:30 PM',
     venue:      'Armadillo Mágico',
@@ -54,7 +55,7 @@ export const events = [
     day:        'Sunday, April 17',
     icon:       '✦',
     time:       '11:00 AM',
-    venue:      'Garcia Family Home',
+    venue:  { en: 'Garcia Family Home', es: 'Casa de la Familia García' },
     address:    null,          // no street address — card shows the city only
     city:       'Arroyo Hondo, S.L.P.',
     mapUrl:     'https://share.google/7gqOVWk8gIsvEzxKY',
