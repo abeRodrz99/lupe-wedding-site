@@ -197,4 +197,6 @@ export function initCountdown({
     );
     sections.forEach((s) => observer.observe(s));
   }
+
+  
 }
