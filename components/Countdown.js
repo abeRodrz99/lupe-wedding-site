@@ -1,4 +1,4 @@
-// components/Countdown.js
+// components/countdown.js
 // ── Countdown bar + scroll-swap nav ─────────────────────────────────────────
 // Shows a live months / days / hours countdown to the ceremony in the fixed top
 // slot. Once the visitor scrolls past the hero the countdown slides out and the
