@@ -1,11 +1,6 @@
-// ── RSVP form component (Airtable Version) ──────────────────────────
+// ── RSVP form component ─────────────────────────────────────────────
 import { t } from '../data/strings.js';
 
-const AIRTABLE_BASE_ID = 'appImJDIkK2RBr07x';
-const AIRTABLE_TOKEN = 'patWLRjGEZ16v8aaZ.b24bf6de0de1d655fa48e7a98a6b87300103497f74dc851e5b873c39e25e25ed';
-const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}`;
-
-// ── Helpers ─────────────────────────────────────────────────────────
 function setLoading(btn, isLoading, text) {
   btn.disabled = isLoading;
   btn.textContent = text;
@@ -24,18 +19,6 @@ function showSuccess(formWrap, locale) {
     formWrap.querySelector('.rsvp-confirm-sub').classList.add('animate');
     formWrap.querySelector('.rsvp-logo-reveal').classList.add('animate');
   });
-}
-
-async function submitToAirtable(payload) {
-  const response = await fetch(`${AIRTABLE_URL}/RSVPs`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ fields: payload })
-  });
-  return response.json();
 }
 
 // ── Init ─────────────────────────────────────────────────────────────
@@ -82,48 +65,35 @@ export function initRSVP(locale = 'en') {
       setLoading(submitBtn, true, t('rsvp.searching', locale));
       statusMsg.textContent = '';
 
-      // Case-insensitive, and escapes apostrophes so names like O'Brien work.
-      const safeName = name.toLowerCase().replace(/'/g, "\\'");
-      const query = encodeURIComponent(`LOWER({Name})='${safeName}'`);
-
       try {
-        const masterRes = await fetch(`${AIRTABLE_URL}/Master%20Guest%20List?filterByFormula=${query}`, {
-          headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
-        });
-        const masterData = await masterRes.json();
+        const res = await fetch(`/api/rsvp?name=${encodeURIComponent(name)}`);
+        const data = await res.json();
 
-        if (masterData.records && masterData.records.length > 0) {
-          const rsvpRes = await fetch(`${AIRTABLE_URL}/RSVPs?filterByFormula=${query}`, {
-            headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
-          });
-          const rsvpData = await rsvpRes.json();
+        if (data.status === 'already_submitted') {
+          statusMsg.textContent = t('rsvp.errAlready', locale);
+          setLoading(submitBtn, false, t('rsvp.findBtn', locale));
+          return;
+        }
 
-          if (rsvpData.records && rsvpData.records.length > 0) {
-            statusMsg.textContent = t('rsvp.errAlready', locale);
-            setLoading(submitBtn, false, t('rsvp.findBtn', locale));
-            return;
-          }
-
-          const record = masterData.records[0];
-          const maxGuests = record.fields['Max Guests Allowed'] || 1;
-
-          guestsSelect.innerHTML = '<option value="0">0</option>';
-          for (let i = 1; i <= maxGuests; i++) {
-            const opt = document.createElement('option');
-            opt.value = i;
-            opt.textContent = i === 1
-              ? t('rsvp.guestOne', locale)
-              : t('rsvp.guestMany', locale).replace('{n}', i);
-            guestsSelect.appendChild(opt);
-          }
-
-          hiddenFields.style.display = 'block';
-          nameInput.disabled = true;
-          setLoading(submitBtn, false, t('rsvp.sendBtn', locale));
-        } else {
+        if (data.status !== 'found') {
           statusMsg.textContent = t('rsvp.errNotFound', locale);
           setLoading(submitBtn, false, t('rsvp.findBtn', locale));
+          return;
         }
+
+        guestsSelect.innerHTML = '<option value="0">0</option>';
+        for (let i = 1; i <= data.maxGuests; i++) {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = i === 1
+            ? t('rsvp.guestOne', locale)
+            : t('rsvp.guestMany', locale).replace('{n}', i);
+          guestsSelect.appendChild(opt);
+        }
+
+        hiddenFields.style.display = 'block';
+        nameInput.disabled = true;
+        setLoading(submitBtn, false, t('rsvp.sendBtn', locale));
       } catch (err) {
         console.error('Lookup error:', err);
         statusMsg.textContent = t('rsvp.errConnection', locale);
@@ -147,17 +117,23 @@ export function initRSVP(locale = 'en') {
     const guestNameFields = document.querySelectorAll('.guest-name-field');
     const guestNamesArray = Array.from(guestNameFields).map((i) => i.value.trim()).filter(Boolean);
 
-    const payload = {
-      'Name': nameInput.value.trim(),
-      'Contact Info': contactValue,
-      'Attending': document.getElementById('attending')?.value === 'yes' ? 'Joyfully Accepts' : 'Regretfully Declines',
-      'Guests': parseInt(guestsSelect.value || '0', 10),
-      'Guest Names': guestNamesArray.join(', '),
-      'Dietary': document.getElementById('dietary')?.value || ''
-    };
-
     try {
-      await submitToAirtable(payload);
+      const res = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: nameInput.value.trim(),
+          contact: contactValue,
+          attending: document.getElementById('attending')?.value,
+          guests: guestsSelect.value,
+          guestNames: guestNamesArray.join(', '),
+          dietary: document.getElementById('dietary')?.value || ''
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Failed');
+
       showSuccess(formWrap, locale);
     } catch (error) {
       console.error('Submission error:', error);
