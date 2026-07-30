@@ -3,7 +3,7 @@ import { couple, events, hotel, directions, calendarEvent } from './data/wedding
 import { initRSVP }   from './components/rsvp.js';
 import { initReveal } from './components/reveal.js';
 import { initGallery } from './components/gallery.js';
-import { initCountdown } from './components/countdown.js';
+import { initCountdown } from './components/Countdown.js';
 import { initFAQ } from './components/faq.js';
 
 // JS is running — let countdown.css drop its no-JS fallback.
