@@ -175,4 +175,4 @@ initReveal();
 initRSVP(locale);
 initGallery();
 initFAQ(locale);
-initCountdown({ targetIso: calendarEvent.startIso, locale });
+initcountdown({ targetIso: calendarEvent.startIso, locale });
