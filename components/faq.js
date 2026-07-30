@@ -16,7 +16,7 @@ export function initFAQ() {
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer" id="faq-answer-${index}">
-        <p>${item.answer}</p>
+        ${[].concat(item.answer).map(p => `<p>${p}</p>`).join('')}
       </div>
     `;
 

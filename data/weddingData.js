@@ -11,32 +11,60 @@ export const couple = {
 export const calendarEvent = {
   title: 'Guadalupe & Orlando\'s Wedding',
   location: 'Church of the Immaculate Conception, Calle Sta. Isabel 100, Armadillo de los Infante, San Luis Potosí, Mexico',
-  startUtc: '20270416T220000Z',  
-  endUtc:   '20270417T050000Z',  
+  startUtc: '20270416T220000Z',
+  endUtc:   '20270417T050000Z',
+  // Same moment as startUtc, in ISO form — used by the countdown bar.
+  // 5:00 PM in Armadillo de los Infante (UTC-5 in April) = 22:00 UTC.
+  startIso: '2027-04-16T22:00:00Z',
 };
 
-export const ceremony = {
-  title:      'Ceremony',
-  icon:       '✦',
-  time:       '5:00 PM',
-  venue:      'Church of the Immaculate Conception',
-  address:    'Calle Sta. Isabel 100',
-  city:       'Armadillo de los Infante, S.L.P.',
-  mapUrl:     'https://share.google/XOYjXNEYD3YMDzYut',
-  venueUrl:   null,
+// ── Events shown as cards in the Details section ────────────────────────────
+// Add, remove, or reorder entries here — main.js renders whatever is in this
+// array, so no code change is needed for a fourth or fifth event.
+// Every event needs: title, icon, time, venue, city.
+// Optional — omit or set to null and the card leaves the line out:
+//   address   street line above the city
+//   day       small label under the title
+//   mapUrl    "Map" button
+//   venueUrl  "Venue Site" button
+// With neither mapUrl nor venueUrl, the whole button row is skipped.
+export const events = [
+  {
+    title:      'Ceremony',
+    icon:       '✦',
+    time:       '5:00 PM',
+    venue:      'Church of the Immaculate Conception',
+    address:    'Calle Sta. Isabel 100',
+    city:       'Armadillo de los Infante, S.L.P.',
+    mapUrl:     'https://share.google/XOYjXNEYD3YMDzYut',
+    venueUrl:   null,
+  },
+  {
+    title:      'Reception',
+    icon:       '✦',
+    time:       '6:30 PM',
+    venue:      'Armadillo Mágico',
+    address:    'Calz. de Guadalupe 100',
+    city:       'Armadillo de los Infante, S.L.P.',
+    mapUrl:     'https://share.google/7gqOVWk8gIsvEzxKY',
+    venueUrl:   'https://www.armadillomagico.com/',
+  },
+  {
+    // TODO: confirm the time and venue for the brunch before publishing.
+    title:      'Brunch',
+    day:        'Sunday, April 17',
+    icon:       '✦',
+    time:       '11:00 AM',
+    venue:      'Garcia Family Home',
+    address:    null,          // no street address — card shows the city only
+    city:       'Arroyo Hondo, S.L.P.',
+    mapUrl:     'https://share.google/7gqOVWk8gIsvEzxKY',
+    venueUrl:   null,
+  },
+];
 
-};
-
-export const reception = {
-  title:      'Reception',
-  icon:       '◈',
-  time:       '6:30 PM',
-  venue:      'Armadillo Mágico',
-  address:    'Calz. de Guadalupe 100',
-  city:       'Armadillo de los Infante, S.L.P.',
-  mapUrl:     'https://share.google/7gqOVWk8gIsvEzxKY',
-  venueUrl:   'https://www.armadillomagico.com/',
-};
+// Kept so any older imports of `ceremony` / `reception` keep working.
+export const [ceremony, reception] = events;
 
 export const hotel = {
   name:       'Armadillo Mágico',
@@ -49,5 +77,3 @@ export const directions = {
   body: 'San Luis Potosí International Airport is the closest to the venue, roughly an hour away. It\'s also a convenient place to stay if you\'d prefer a larger city.',
   buttonUrl: 'https://maps.app.goo.gl/fw5m15a5ik2e1WFR8',
 };
-
-

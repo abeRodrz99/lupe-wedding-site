@@ -1,0 +1,40 @@
+/* ── EVENT CARDS ─────────────────────────────────────────────────────────────
+   Overrides for the Details grid now that it holds three events, plus the
+   optional `day` label. Cards themselves are still styled in components.css.
+   Data lives in ../data/weddingData.js (the `events` array).
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Wide enough for three cards in a row; the existing
+   repeat(auto-fit, minmax(280px, 1fr)) drops to 2 then 1 on its own. */
+.cards {
+  max-width: 1040px;
+}
+
+/* Optional day label, e.g. "Sunday, April 17" for the brunch */
+.card__day {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: -0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Keep the three cards the same height so the map buttons line up */
+.cards .card {
+  display: flex;
+  flex-direction: column;
+}
+
+.cards .card__actions {
+  margin-top: auto;
+}
+
+@media (max-width: 540px) {
+  .card__day {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+  }
+}

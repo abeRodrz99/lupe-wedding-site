@@ -1,9 +1,13 @@
 // ── Entry point ──────────────────────────────────────────────────────────────
-import { couple, ceremony, reception, hotel, directions, calendarEvent } from './data/weddingData.js';
+import { couple, events, hotel, directions, calendarEvent } from './data/weddingData.js';
 import { initRSVP }   from './components/rsvp.js';
 import { initReveal } from './components/reveal.js';
 import { initGallery } from './components/gallery.js';
+import { initCountdown } from './components/countdown.js';
 import { initFAQ } from './components/faq.js';
+
+// JS is running — let countdown.css drop its no-JS fallback.
+document.documentElement.classList.remove('no-js');
 
 // ── Render hero ───────────────────────────────────────────────────────────────
 document.getElementById('hero-names').innerHTML =
@@ -99,19 +103,21 @@ function renderCard(event) {
     <div class="card">
       <div class="card__icon">${event.icon}</div>
       <p class="card__tag">${event.title}</p>
+      ${event.day ? `<p class="card__day">${event.day}</p>` : ''}
       <p class="card__time">${event.time}</p>
       <p class="card__venue">${event.venue}</p>
-      <p class="card__address">${event.address}<br>${event.city}</p>
+      <p class="card__address">${event.address ? `${event.address}<br>` : ''}${event.city}</p>
+      ${event.mapUrl || event.venueUrl ? `
       <div class="card__actions">
-        <a href="${event.mapUrl}" class="btn btn--outline" target="_blank" rel="noopener">Map</a>
-        ${event.venueUrl ? `<a href="${event.venueUrl}" target="_blank" class="btn btn--outline">Venue Site</a>` : ''}
-      </div>
+        ${event.mapUrl ? `<a href="${event.mapUrl}" class="btn btn--outline" target="_blank" rel="noopener">Map</a>` : ''}
+        ${event.venueUrl ? `<a href="${event.venueUrl}" class="btn btn--outline" target="_blank" rel="noopener">Venue Site</a>` : ''}
+      </div>` : ''}
     </div>
   `;
 }
 
 document.getElementById('cards').innerHTML =
-  renderCard(ceremony) + renderCard(reception);
+  events.map(renderCard).join('');
 
 // ── Render hotel ──────────────────────────────────────────────────────────────
 document.getElementById('hotel-block').innerHTML = `
@@ -150,3 +156,4 @@ initReveal();
 initRSVP();
 initGallery();
 initFAQ();
+initCountdown({ targetIso: calendarEvent.startIso });
