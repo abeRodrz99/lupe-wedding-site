@@ -50,8 +50,7 @@ export const events = [
     venueUrl:   'https://www.armadillomagico.com/',
   },
   {
-    // TODO: confirm the time and venue for the brunch before publishing.
-    title:      'Brunch',
+    title:      'Tornaboda',
     day:        'Sunday, April 17',
     icon:       '✦',
     time:       '11:00 AM',
