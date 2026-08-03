@@ -7,6 +7,14 @@ function nameFormula(name) {
   return encodeURIComponent(`LOWER({Name})='${safe}'`);
 }
 
+// Reads the guest allowance safely: blank / missing / 0 all become 0,
+// so nobody gets an accidental plus-one.
+function readMaxGuests(record) {
+  const raw = record?.fields?.['Max Guests Allowed'];
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
+}
+
 async function airtableGet(table, formula, token) {
   const res = await fetch(`${AIRTABLE_URL}/${table}?filterByFormula=${formula}`, {
     headers: { Authorization: `Bearer ${token}` }
@@ -41,7 +49,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json({
         status: 'found',
-        maxGuests: master.records[0].fields['Max Guests Allowed'] || 1
+        maxGuests: readMaxGuests(master.records[0])
       });
     }
 
@@ -64,7 +72,7 @@ export default async function handler(req, res) {
         return res.status(409).json({ error: 'Already submitted' });
       }
 
-      const maxGuests = master.records[0].fields['Max Guests Allowed'] || 1;
+      const maxGuests = readMaxGuests(master.records[0]);
       const guests = Math.min(parseInt(body.guests, 10) || 0, maxGuests);
 
       const fields = {
