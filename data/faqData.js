@@ -6,8 +6,8 @@ export const faqData = [
       es: "¿Cuál es la fecha límite para confirmar?",
     },
     answer: {
-      en: "Please RSVP by the deadline indicated on your invitation so we can finalize our numbers with the venue.",
-      es: "Por favor confirma tu asistencia antes de la fecha indicada en tu invitación para que podamos cerrar los números con el lugar del evento.",
+      en: "Please RSVP by January 1, 2027 so we can finalize our numbers with the venue.",
+      es: "Por favor, confirmen su asistencia antes del 1 de enero de 2027 para que podamos concretar el número de asistentes con el lugar del evento.",
     },
   },
   {

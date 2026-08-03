@@ -52,7 +52,7 @@ export const events = [
   },
   {
     title:      'Tornaboda',
-    day:        'Sunday, April 17',
+    day:        'Saturday, April 17',
     icon:       '✦',
     time:       '11:00 AM',
     venue:  { en: 'Garcia Family Home', es: 'Casa de la Familia García' },
