@@ -36,6 +36,20 @@ export const faqData = [
       ],
     },
   },
+    {
+    question: {
+      en: "How do I reserve my room?",
+      es: "¿Cómo reservo mi habitación?",
+    },
+    answer: {
+      en: [
+        "All rooms have been blocked off at both locations. In order to confirm your reservation you need to call the hotels directly. If you try reserving online they will show up as all booked",
+      ],
+      es: [
+        "Todas las habitaciones están bloqueadas en ambos hoteles. Para confirmar su reserva, debe llamar directamente a los hoteles. Si intenta reservar por línea, aparecerán como completas.",
+      ],
+    },
+  },
   {
     question: {
       en: "How far is Armadillo de los Infante from San Luis Potosí?",

@@ -1,5 +1,5 @@
 // ── Entry point ──────────────────────────────────────────────────────────────
-import { couple, events, hotel, directions, calendarEvent } from './data/weddingData.js';
+import { couple, events, hotels, directions, calendarEvent } from './data/weddingData.js';
 import { t } from './data/strings.js';
 import { detectLocale, setLocale } from './lib/i18n.js';
 import { initRSVP }   from './components/rsvp.js';
@@ -140,16 +140,51 @@ function renderCard(event) {
 
 document.getElementById('cards').innerHTML = events.map(renderCard).join('');
 
-// ── Render hotel ──────────────────────────────────────────────────────────────
-document.getElementById('hotel-block').innerHTML = `
-  <p class="hotel__tag">${t('travel.reserveRoom', locale)}</p>
-  <h3 class="hotel__name">${hotel.name}</h3>
-  <p class="hotel__address">${hotel.address}</p>
-  <dl class="hotel__meta">
-    <div class="hotel__meta-row"><dt>${t('travel.phone', locale)}</dt><dd>${hotel.phone}</dd></div>
-  </dl>
-  <a href="${hotel.bookUrl}" target="_blank" rel="noopener" class="btn btn--gold">${t('travel.bookRoom', locale)}</a>
-`;
+// ── Render hotel tabs ─────────────────────────────────────────────────────
+function renderHotelTabs() {
+  const tabsHtml = hotels.map((h, i) => `
+    <button class="hotel-tab ${i === 0 ? 'active' : ''}" data-hotel="${i}">
+      ${h.name}
+    </button>
+  `).join('');
+
+  const contentHtml = hotels.map((h, i) => `
+    <div class="hotel-option ${i === 0 ? 'active' : ''}" data-hotel="${i}">
+      <p class="hotel__tag">${t('travel.reserveRoom', locale)}</p>
+      <h3 class="hotel__name">${h.name}</h3>
+      <p class="hotel__address">${h.address}</p>
+      <dl class="hotel__meta">
+        <div class="hotel__meta-row"><dt>${t('travel.phone', locale)}</dt><dd>${h.phone}</dd></div>
+      </dl>
+      <p class="hotel__booking-code"><strong>${t('travel.bookingCode', locale)}:</strong> ${h.bookingCode}</p>
+      ${h.siteUrl ? `<a href="${h.siteUrl}" class="btn btn--gold" target="_blank" rel="noopener">${t('travel.visitWebsite', locale)}</a>` : ''}
+    </div>
+  `).join('');
+
+  document.getElementById('hotel-block').innerHTML = `
+    <div class="hotel-tabs">
+      ${tabsHtml}
+    </div>
+    <div class="hotel-content">
+      ${contentHtml}
+    </div>
+  `;
+
+  // Tab switching
+  document.querySelectorAll('.hotel-tab').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      const hotelIndex = e.target.dataset.hotel;
+      
+      document.querySelectorAll('.hotel-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.hotel-option').forEach(opt => opt.classList.remove('active'));
+      
+      e.target.classList.add('active');
+      document.querySelector(`.hotel-option[data-hotel="${hotelIndex}"]`).classList.add('active');
+    });
+  });
+}
+
+renderHotelTabs();
 
 // ── Render directions ─────────────────────────────────────────────────────────
 document.getElementById('directions-body').innerHTML = `

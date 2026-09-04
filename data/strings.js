@@ -27,7 +27,7 @@ export const strings = {
 
     // Travel
     'travel.label': 'Travel & Stay', 'travel.heading': 'Getting There',
-    'travel.reserveRoom': 'Reserve Your Room', 'travel.bookRoom': 'Book Your Room', 'travel.phone': 'Phone',
+    'travel.reserveRoom': 'Reserve Your Room', 'travel.visitWebsite': 'Visit Website', 'travel.phone': 'Phone', 'travel.bookingCode': 'Booking Code',
     'travel.gettingHere': 'Getting Here', 'travel.getDirections': 'Get Directions',
     'directions.body': directionsEn,
 
@@ -77,10 +77,10 @@ export const strings = {
     // Details
     'details.label': 'La Boda', 'details.heading': 'Detalles',
     'card.map': 'Mapa', 'card.venueSite': 'Sitio del Lugar',
-
+    
     // Travel
     'travel.label': 'Viaje y Hospedaje', 'travel.heading': 'Cómo Llegar',
-    'travel.reserveRoom': 'Reserva tu Habitación', 'travel.bookRoom': 'Reservar Habitación', 'travel.phone': 'Tel',
+    'travel.reserveRoom': 'Reserva tu Habitación', 'travel.visitWebsite': 'Visitar Sitio Web', 'travel.phone': 'Tel', 'travel.bookingCode': 'Código de Reserva',
     'travel.gettingHere': 'Cómo Llegar', 'travel.getDirections': 'Obtener Direcciones',
     'directions.body': directionsEs,
 

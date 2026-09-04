@@ -141,7 +141,7 @@
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;
 }
 
 .hotel__name {
@@ -149,20 +149,20 @@
   font-size: 1.7rem;
   font-weight: 300;
   color: var(--ivory);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.8rem;
 }
 
 .hotel__address {
   font-family: var(--font-sans);
   font-size: 0.8rem;
   color: var(--gold-mid);
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.5rem;
 }
 
 .hotel__meta {
   border-top: 1px solid rgba(201, 168, 124, 0.2);
   padding-top: 1.2rem;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
@@ -178,6 +178,81 @@
 
 .hotel__meta-row dt { color: var(--gold); font-weight: 400; }
 .hotel__meta-row dd { color: rgba(244, 236, 224, 0.82); font-weight: 300; }
+
+.hotel__booking-code {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(201, 168, 124, 0.2);
+  color: var(--gold);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+}
+
+.hotel__booking-code strong {
+  font-weight: 600;
+  color: var(--ivory);
+}
+
+/* ── Hotel Tabs ──────────────────────────────────────────────────────────── */
+.hotel-tabs {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+}
+
+.hotel-tab {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid rgba(201, 168, 124, 0.3);
+  background: transparent;
+  color: var(--gold);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hotel-tab:hover {
+  border-color: var(--gold);
+  background: rgba(201, 168, 124, 0.1);
+}
+
+.hotel-tab.active {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.hotel-content {
+  position: relative;
+  padding: 0 1rem;
+}
+
+.hotel-option {
+  display: none;
+  padding: 1.5rem 0;
+}
+
+.hotel-option.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.hotel-option .btn--gold {
+  margin-top: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 /* ── Directions block ────────────────────────────────────────────────────── */
 .directions {

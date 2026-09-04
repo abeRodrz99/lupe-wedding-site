@@ -52,7 +52,7 @@ export const events = [
   },
   {
     title:      'Tornaboda',
-    day:        'Saturday, April 17',
+    day:    { en: 'Saturday, April 17', es: 'Sábado, 17 de abril' },
     icon:       '✦',
     time:       '11:00 AM',
     venue:  { en: 'Garcia Family Home', es: 'Casa de la Familia García' },
@@ -66,12 +66,22 @@ export const events = [
 // Kept so any older imports of `ceremony` / `reception` keep working.
 export const [ceremony, reception] = events;
 
-export const hotel = {
-  name:       'Armadillo Mágico',
-  address:    'Calz. de Guadalupe 100, 78980 Armadillo de los Infante, S.L.P.',
-  phone:      '+52 444 106 0503',
-  bookUrl:    'https://www.armadillomagico.com/hospedaje',
-};
+export const hotels = [
+  {
+    name:       'Armadillo Mágico',
+    address:    'Calz. de Guadalupe 100, 78980 Armadillo de los Infante, S.L.P.',
+    phone:      '+52 444 106 0503',
+    bookingCode: 'Boda Lupe & Orlando',
+    siteUrl:    'https://www.armadillomagico.com/',
+  },
+  {
+    name:       'Casa de la abuela',
+    address:    'Calle Sta. Isabel, 78980 Armadillo de los Infante, S.L.P.',
+    phone:      '+52 444 534 3435',
+    bookingCode: 'Boda Lupe & Orlando',
+    siteUrl:    'https://hotelvillanueva.com.mx/hotel/casa-de-la-abuela/',
+  },
+];
 
 export const directions = {
   body: 'San Luis Potosí International Airport is the closest to the venue, roughly an hour away. It\'s also a convenient place to stay if you\'d prefer a larger city.',
